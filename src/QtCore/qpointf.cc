@@ -37,9 +37,9 @@ Persistent<Function> QPointFWrap::constructor;
 
 // Supported implementations:
 //   QPointF (qreal x, qreal y)
-QPointFWrap::QPointFWrap(const Arguments& args) : q_(NULL) {
-  if (args[0]->IsNumber() && args[1]->IsNumber()) {
-    q_ = new QPointF(args[0]->NumberValue(), args[1]->NumberValue());
+QPointFWrap::QPointFWrap(const FunctionCallbackInfo& info) : q_(NULL) {
+  if (info[0]->IsNumber() && info[1]->IsNumber()) {
+    q_ = new QPointF(info[0]->NumberValue(), info[1]->NumberValue());
   } else {
     q_ = new QPointF;
   }
@@ -67,13 +67,11 @@ void QPointFWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QPointF"), constructor);
 }
 
-Handle<Value> QPointFWrap::New(const Arguments& args) {
-  HandleScope scope;
-
+Handle<Value> QPointFWrap::New(const FunctionCallbackInfo& info) {
   QPointFWrap* w = new QPointFWrap(args);
-  w->Wrap(args.This());
+  w->Wrap(info.This());
 
-  return args.This();
+  return info.This();
 }
 
 Handle<Value> QPointFWrap::NewInstance(QPointF q) {
@@ -86,28 +84,28 @@ Handle<Value> QPointFWrap::NewInstance(QPointF q) {
   return scope.Close(instance);
 }
 
-Handle<Value> QPointFWrap::X(const Arguments& args) {
+Handle<Value> QPointFWrap::X(const FunctionCallbackInfo& info) {
   HandleScope scope;
 
-  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(args.This());
+  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(info.This());
   QPointF* q = w->GetWrapped();
 
   return scope.Close(Number::New(q->x()));
 }
 
-Handle<Value> QPointFWrap::Y(const Arguments& args) {
+Handle<Value> QPointFWrap::Y(const FunctionCallbackInfo& info) {
   HandleScope scope;
 
-  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(args.This());
+  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(info.This());
   QPointF* q = w->GetWrapped();
 
   return scope.Close(Number::New(q->y()));
 }
 
-Handle<Value> QPointFWrap::IsNull(const Arguments& args) {
+Handle<Value> QPointFWrap::IsNull(const FunctionCallbackInfo& info) {
   HandleScope scope;
 
-  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(args.This());
+  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(info.This());
   QPointF* q = w->GetWrapped();
 
   return scope.Close(Boolean::New(q->isNull()));
