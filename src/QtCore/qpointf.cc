@@ -37,7 +37,7 @@ Persistent<Function> QPointFWrap::constructor;
 
 // Supported implementations:
 //   QPointF (qreal x, qreal y)
-QPointFWrap::QPointFWrap(const FunctionCallbackInfo& info) : q_(NULL) {
+QPointFWrap::QPointFWrap(const FunctionCallbackInfo<v8::Value>& info) : q_(NULL) {
   if (info[0]->IsNumber() && info[1]->IsNumber()) {
     q_ = new QPointF(info[0]->NumberValue(), info[1]->NumberValue());
   } else {
