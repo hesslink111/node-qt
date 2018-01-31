@@ -67,7 +67,7 @@ void QPointFWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QPointF"), constructor);
 }
 
-Handle<Value> QPointFWrap::New(const FunctionCallbackInfo& info) {
+Handle<Value> QPointFWrap::New(const FunctionCallbackInfo<v8::Value>& info) {
   QPointFWrap* w = new QPointFWrap(args);
   w->Wrap(info.This());
 
@@ -84,7 +84,7 @@ Handle<Value> QPointFWrap::NewInstance(QPointF q) {
   return scope.Close(instance);
 }
 
-Handle<Value> QPointFWrap::X(const FunctionCallbackInfo& info) {
+Handle<Value> QPointFWrap::X(const FunctionCallbackInfo<v8::Value>& info) {
   HandleScope scope;
 
   QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(info.This());
@@ -93,7 +93,7 @@ Handle<Value> QPointFWrap::X(const FunctionCallbackInfo& info) {
   return scope.Close(Number::New(q->x()));
 }
 
-Handle<Value> QPointFWrap::Y(const FunctionCallbackInfo& info) {
+Handle<Value> QPointFWrap::Y(const FunctionCallbackInfo<v8::Value>& info) {
   HandleScope scope;
 
   QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(info.This());
@@ -102,7 +102,7 @@ Handle<Value> QPointFWrap::Y(const FunctionCallbackInfo& info) {
   return scope.Close(Number::New(q->y()));
 }
 
-Handle<Value> QPointFWrap::IsNull(const FunctionCallbackInfo& info) {
+Handle<Value> QPointFWrap::IsNull(const FunctionCallbackInfo<v8::Value>& info) {
   HandleScope scope;
 
   QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(info.This());

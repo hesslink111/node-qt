@@ -34,8 +34,6 @@
 #include <node.h>
 #include <QPointF>
 
-using v8::FunctionCallbackInfo;
-
 class QPointFWrap : public node::ObjectWrap {
  public:
   static void Initialize(v8::Handle<v8::Object> target);
@@ -50,12 +48,12 @@ class QPointFWrap : public node::ObjectWrap {
   QPointFWrap(const v8::& args);
   ~QPointFWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const FunctionCallbackInfo& info);
+  static v8::Handle<v8::Value> New(const FunctionCallbackInfo<v8::Value>& info);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> IsNull(const FunctionCallbackInfo& args);
-  static v8::Handle<v8::Value> X(const FunctionCallbackInfo& args);
-  static v8::Handle<v8::Value> Y(const FunctionCallbackInfo& args);
+  static v8::Handle<v8::Value> IsNull(const FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> X(const FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Y(const FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QPointF* q_;
