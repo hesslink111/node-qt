@@ -61,13 +61,10 @@ void QSizeWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewFromUtf8(isolate, "QSize"), constructor);
 }
 
-Handle<Value> QSizeWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QSizeWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QSizeWrap* w = new QSizeWrap();
   w->Wrap(args.This());
-
-  return args.This();
+  args->GetReturnValue().Set(args.This());
 }
 
 Handle<Value> QSizeWrap::NewInstance(QSize q) {
