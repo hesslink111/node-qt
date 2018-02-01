@@ -73,7 +73,7 @@ void QPointFWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QPointFWrap* w = new QPointFWrap(args);
   w->Wrap(args.This());
 
-  args.GetReturnValue.Set(args.This());
+  args.GetReturnValue().Set(args.This());
 }
 
 void QPointFWrap::X(const FunctionCallbackInfo<v8::Value>& args) {
