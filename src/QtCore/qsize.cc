@@ -57,7 +57,7 @@ void QSizeWrap::Initialize(Handle<Object> target) {
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "height"),
       FunctionTemplate::New(isolate, Height)->GetFunction());
 
-  constructor = Persistent<Function>::New(tpl->GetFunction());
+  constructor.Reset(isolate, tpl->GetFunction());
   target->Set(String::NewFromUtf8(isolate, "QSize"), constructor);
 }
 
