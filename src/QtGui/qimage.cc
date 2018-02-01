@@ -39,7 +39,7 @@ Persistent<Function> QImageWrap::constructor;
 // Supported implementations:
 //   QImage ( )
 //   QImage ( QString filename )
-QImageWrap::QImageWrap(const Arguments& args) {
+QImageWrap::QImageWrap(const FunctionCallbackInfo<v8::Value>& args) {
   if (args[0]->IsString()) {
     // QImage ( QString filename ) 
     q_ = new QImage(qt_v8::ToQString(args[0]->ToString()));
@@ -68,7 +68,7 @@ void QImageWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QImage"), constructor);
 }
 
-Handle<Value> QImageWrap::New(const Arguments& args) {
+Handle<Value> QImageWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QImageWrap* w = new QImageWrap(args);
@@ -77,7 +77,7 @@ Handle<Value> QImageWrap::New(const Arguments& args) {
   return args.This();
 }
 
-Handle<Value> QImageWrap::IsNull(const Arguments& args) {
+Handle<Value> QImageWrap::IsNull(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QImageWrap* w = ObjectWrap::Unwrap<QImageWrap>(args.This());

@@ -41,15 +41,15 @@ class QSoundWrap : public node::ObjectWrap {
   QSound* GetWrapped() const { return q_; };
 
  private:
-  QSoundWrap(const v8::Arguments& args);
+  QSoundWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QSoundWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::Arguments& args);
+  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> Play(const v8::Arguments& args);
-  static v8::Handle<v8::Value> FileName(const v8::Arguments& args);
-  static v8::Handle<v8::Value> SetLoops(const v8::Arguments& args);
+  static v8::Handle<v8::Value> Play(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> FileName(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> SetLoops(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QSound* q_;

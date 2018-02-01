@@ -64,7 +64,7 @@ void QTestEventListWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QTestEventList"), constructor);
 }
 
-Handle<Value> QTestEventListWrap::New(const Arguments& args) {
+Handle<Value> QTestEventListWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QTestEventListWrap* w = new QTestEventListWrap();
@@ -73,7 +73,7 @@ Handle<Value> QTestEventListWrap::New(const Arguments& args) {
   return args.This();
 }
 
-Handle<Value> QTestEventListWrap::AddMouseClick(const Arguments& args) {
+Handle<Value> QTestEventListWrap::AddMouseClick(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QTestEventListWrap* w = ObjectWrap::Unwrap<QTestEventListWrap>(args.This());
@@ -84,7 +84,7 @@ Handle<Value> QTestEventListWrap::AddMouseClick(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
-Handle<Value> QTestEventListWrap::AddKeyPress(const Arguments& args) {
+Handle<Value> QTestEventListWrap::AddKeyPress(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QTestEventListWrap* w = ObjectWrap::Unwrap<QTestEventListWrap>(args.This());
@@ -98,7 +98,7 @@ Handle<Value> QTestEventListWrap::AddKeyPress(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
-Handle<Value> QTestEventListWrap::Simulate(const Arguments& args) {
+Handle<Value> QTestEventListWrap::Simulate(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QTestEventListWrap* w = ObjectWrap::Unwrap<QTestEventListWrap>(args.This());

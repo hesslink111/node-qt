@@ -42,7 +42,7 @@ Persistent<Function> QPenWrap::constructor;
 //   QPen (QBrush brush, qreal width, Qt::PenStyle style = Qt::SolidLine, Qt::PenCapStyle cap = Qt::SquareCap, Qt::PenJoinStyle join = Qt::BevelJoin )
 //   QPen (QColor color)
 //   QPen ()
-QPenWrap::QPenWrap(const Arguments& args) {
+QPenWrap::QPenWrap(const FunctionCallbackInfo<v8::Value>& args) {
   QString arg0_constructor;
   if (args[0]->IsObject()) {
     arg0_constructor = 
@@ -121,7 +121,7 @@ void QPenWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QPen"), constructor);
 }
 
-Handle<Value> QPenWrap::New(const Arguments& args) {
+Handle<Value> QPenWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPenWrap* w = new QPenWrap(args);

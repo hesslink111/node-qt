@@ -41,16 +41,16 @@ class QPainterPathWrap : public node::ObjectWrap {
   QPainterPath* GetWrapped() const { return q_; };
 
  private:
-  QPainterPathWrap(const v8::Arguments& args);
+  QPainterPathWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QPainterPathWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::Arguments& args);
+  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> MoveTo(const v8::Arguments& args);
-  static v8::Handle<v8::Value> CurrentPosition(const v8::Arguments& args);
-  static v8::Handle<v8::Value> LineTo(const v8::Arguments& args);
-  static v8::Handle<v8::Value> CloseSubpath(const v8::Arguments& args);
+  static v8::Handle<v8::Value> MoveTo(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> CurrentPosition(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> LineTo(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> CloseSubpath(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QPainterPath* q_;

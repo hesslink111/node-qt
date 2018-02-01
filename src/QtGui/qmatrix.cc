@@ -40,7 +40,7 @@ Persistent<Function> QMatrixWrap::constructor;
 //   QMatrix ( )
 //   QMatrix ( qreal m11, qreal m12, qreal m21, qreal m22, qreal dx, qreal dy )
 //   QMatrix ( QMatrix matrix )
-QMatrixWrap::QMatrixWrap(const Arguments& args) : q_(NULL) {
+QMatrixWrap::QMatrixWrap(const FunctionCallbackInfo<v8::Value>& args) : q_(NULL) {
   if (args.Length() == 0) {
     // QMatrix ( )
 
@@ -102,7 +102,7 @@ void QMatrixWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QMatrix"), constructor);
 }
 
-Handle<Value> QMatrixWrap::New(const Arguments& args) {
+Handle<Value> QMatrixWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QMatrixWrap* w = new QMatrixWrap(args);
@@ -121,7 +121,7 @@ Handle<Value> QMatrixWrap::NewInstance(QMatrix q) {
   return scope.Close(instance);
 }
 
-Handle<Value> QMatrixWrap::M11(const Arguments& args) {
+Handle<Value> QMatrixWrap::M11(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
@@ -130,7 +130,7 @@ Handle<Value> QMatrixWrap::M11(const Arguments& args) {
   return scope.Close(Number::New(q->m11()));
 }
 
-Handle<Value> QMatrixWrap::M12(const Arguments& args) {
+Handle<Value> QMatrixWrap::M12(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
@@ -139,7 +139,7 @@ Handle<Value> QMatrixWrap::M12(const Arguments& args) {
   return scope.Close(Number::New(q->m12()));
 }
 
-Handle<Value> QMatrixWrap::M21(const Arguments& args) {
+Handle<Value> QMatrixWrap::M21(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
@@ -148,7 +148,7 @@ Handle<Value> QMatrixWrap::M21(const Arguments& args) {
   return scope.Close(Number::New(q->m21()));
 }
 
-Handle<Value> QMatrixWrap::M22(const Arguments& args) {
+Handle<Value> QMatrixWrap::M22(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
@@ -157,7 +157,7 @@ Handle<Value> QMatrixWrap::M22(const Arguments& args) {
   return scope.Close(Number::New(q->m22()));
 }
 
-Handle<Value> QMatrixWrap::Dx(const Arguments& args) {
+Handle<Value> QMatrixWrap::Dx(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
@@ -166,7 +166,7 @@ Handle<Value> QMatrixWrap::Dx(const Arguments& args) {
   return scope.Close(Number::New(q->dx()));
 }
 
-Handle<Value> QMatrixWrap::Dy(const Arguments& args) {
+Handle<Value> QMatrixWrap::Dy(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
@@ -175,7 +175,7 @@ Handle<Value> QMatrixWrap::Dy(const Arguments& args) {
   return scope.Close(Number::New(q->dy()));
 }
 
-Handle<Value> QMatrixWrap::Translate(const Arguments& args) {
+Handle<Value> QMatrixWrap::Translate(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
@@ -186,7 +186,7 @@ Handle<Value> QMatrixWrap::Translate(const Arguments& args) {
   return scope.Close(args.This());
 }
 
-Handle<Value> QMatrixWrap::Scale(const Arguments& args) {
+Handle<Value> QMatrixWrap::Scale(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());

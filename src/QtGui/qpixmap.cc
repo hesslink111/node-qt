@@ -64,7 +64,7 @@ void QPixmapWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QPixmap"), constructor);
 }
 
-Handle<Value> QPixmapWrap::New(const Arguments& args) {
+Handle<Value> QPixmapWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPixmapWrap* w = new QPixmapWrap(args[0]->IntegerValue(), 
@@ -84,7 +84,7 @@ Handle<Value> QPixmapWrap::NewInstance(QPixmap q) {
   return scope.Close(instance);
 }
 
-Handle<Value> QPixmapWrap::Width(const Arguments& args) {
+Handle<Value> QPixmapWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPixmapWrap* w = ObjectWrap::Unwrap<QPixmapWrap>(args.This());
@@ -93,7 +93,7 @@ Handle<Value> QPixmapWrap::Width(const Arguments& args) {
   return scope.Close(Number::New(q->width()));
 }
 
-Handle<Value> QPixmapWrap::Height(const Arguments& args) {
+Handle<Value> QPixmapWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPixmapWrap* w = ObjectWrap::Unwrap<QPixmapWrap>(args.This());
@@ -102,7 +102,7 @@ Handle<Value> QPixmapWrap::Height(const Arguments& args) {
   return scope.Close(Number::New(q->height()));
 }
 
-Handle<Value> QPixmapWrap::Save(const Arguments& args) {
+Handle<Value> QPixmapWrap::Save(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPixmapWrap* w = ObjectWrap::Unwrap<QPixmapWrap>(args.This());
@@ -116,7 +116,7 @@ Handle<Value> QPixmapWrap::Save(const Arguments& args) {
 // Supports:
 //    fill()
 //    fill(QColor color)
-Handle<Value> QPixmapWrap::Fill(const Arguments& args) {
+Handle<Value> QPixmapWrap::Fill(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPixmapWrap* w = ObjectWrap::Unwrap<QPixmapWrap>(args.This());

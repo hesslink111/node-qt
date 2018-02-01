@@ -40,7 +40,7 @@ Persistent<Function> QColorWrap::constructor;
 //   QColor ( int r, int g, int b, int a = 255 )
 //   QColor ( QString color )
 //   QColor ( QColor )
-QColorWrap::QColorWrap(const Arguments& args) {
+QColorWrap::QColorWrap(const FunctionCallbackInfo<v8::Value>& args) {
   if (args.Length() >= 3) {
     // QColor ( int r, int g, int b, int a = 255 )
     q_ = new QColor(
@@ -96,7 +96,7 @@ void QColorWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QColor"), constructor);
 }
 
-Handle<Value> QColorWrap::New(const Arguments& args) {
+Handle<Value> QColorWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QColorWrap* w = new QColorWrap(args);
@@ -105,7 +105,7 @@ Handle<Value> QColorWrap::New(const Arguments& args) {
   return args.This();
 }
 
-Handle<Value> QColorWrap::Red(const Arguments& args) {
+Handle<Value> QColorWrap::Red(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
@@ -114,7 +114,7 @@ Handle<Value> QColorWrap::Red(const Arguments& args) {
   return scope.Close(Number::New(q->red()));
 }
 
-Handle<Value> QColorWrap::Green(const Arguments& args) {
+Handle<Value> QColorWrap::Green(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
@@ -123,7 +123,7 @@ Handle<Value> QColorWrap::Green(const Arguments& args) {
   return scope.Close(Number::New(q->green()));
 }
 
-Handle<Value> QColorWrap::Blue(const Arguments& args) {
+Handle<Value> QColorWrap::Blue(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
@@ -132,7 +132,7 @@ Handle<Value> QColorWrap::Blue(const Arguments& args) {
   return scope.Close(Number::New(q->blue()));
 }
 
-Handle<Value> QColorWrap::Alpha(const Arguments& args) {
+Handle<Value> QColorWrap::Alpha(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
@@ -141,7 +141,7 @@ Handle<Value> QColorWrap::Alpha(const Arguments& args) {
   return scope.Close(Number::New(q->alpha()));
 }
 
-Handle<Value> QColorWrap::Name(const Arguments& args) {
+Handle<Value> QColorWrap::Name(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());

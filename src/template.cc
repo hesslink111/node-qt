@@ -37,7 +37,7 @@ Persistent<Function> __Template__Wrap::constructor;
 
 // Supported implementations:
 //   __Template__ ( ??? )
-__Template__Wrap::__Template__Wrap(const Arguments& args) : q_(NULL) {
+__Template__Wrap::__Template__Wrap(const FunctionCallbackInfo<v8::Value>& args) : q_(NULL) {
   q_ = new __Template__;
 }
 
@@ -59,7 +59,7 @@ void __Template__Wrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("__Template__"), constructor);
 }
 
-Handle<Value> __Template__Wrap::New(const Arguments& args) {
+Handle<Value> __Template__Wrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   __Template__Wrap* w = new __Template__Wrap(args);
@@ -78,7 +78,7 @@ Handle<Value> __Template__Wrap::NewInstance(__Template__ q) {
   return scope.Close(instance);
 }
 
-Handle<Value> __Template__Wrap::Example(const Arguments& args) {
+Handle<Value> __Template__Wrap::Example(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   __Template__Wrap* w = ObjectWrap::Unwrap<__Template__Wrap>(args.This());

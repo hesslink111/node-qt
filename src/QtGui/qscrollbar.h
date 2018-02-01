@@ -47,14 +47,14 @@ class QScrollBarWrap : public node::ObjectWrap {
   static v8::Handle<v8::Value> NewInstance(QScrollBar *q);
 
  private:
-  QScrollBarWrap(const v8::Arguments& args);
+  QScrollBarWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QScrollBarWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::Arguments& args);
+  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> Value(const v8::Arguments& args);
-  static v8::Handle<v8::Value> SetValue(const v8::Arguments& args);
+  static v8::Handle<v8::Value> Value(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> SetValue(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QScrollBar* q_;

@@ -46,20 +46,20 @@ class QMatrixWrap : public node::ObjectWrap {
   static v8::Handle<v8::Value> NewInstance(QMatrix q);
 
  private:
-  QMatrixWrap(const v8::Arguments& args);
+  QMatrixWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QMatrixWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::Arguments& args);
+  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> M11(const v8::Arguments& args);
-  static v8::Handle<v8::Value> M12(const v8::Arguments& args);
-  static v8::Handle<v8::Value> M21(const v8::Arguments& args);
-  static v8::Handle<v8::Value> M22(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Dx(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Dy(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Translate(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Scale(const v8::Arguments& args);
+  static v8::Handle<v8::Value> M11(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> M12(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> M21(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> M22(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Dx(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Dy(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Translate(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Scale(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QMatrix* q_;

@@ -63,7 +63,7 @@ void QApplicationWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QApplication"), constructor);
 }
 
-Handle<Value> QApplicationWrap::New(const Arguments& args) {
+Handle<Value> QApplicationWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QApplicationWrap* w = new QApplicationWrap();
@@ -72,7 +72,7 @@ Handle<Value> QApplicationWrap::New(const Arguments& args) {
   return args.This();
 }
 
-Handle<Value> QApplicationWrap::ProcessEvents(const Arguments& args) {
+Handle<Value> QApplicationWrap::ProcessEvents(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QApplicationWrap* w = ObjectWrap::Unwrap<QApplicationWrap>(args.This());
@@ -83,7 +83,7 @@ Handle<Value> QApplicationWrap::ProcessEvents(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
-Handle<Value> QApplicationWrap::Exec(const Arguments& args) {
+Handle<Value> QApplicationWrap::Exec(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QApplicationWrap* w = ObjectWrap::Unwrap<QApplicationWrap>(args.This());

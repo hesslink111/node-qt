@@ -35,7 +35,7 @@ using namespace v8;
 
 Persistent<Function> QScrollBarWrap::constructor;
 
-QScrollBarWrap::QScrollBarWrap(const Arguments& args) : q_(NULL) {
+QScrollBarWrap::QScrollBarWrap(const FunctionCallbackInfo<v8::Value>& args) : q_(NULL) {
 }
 
 QScrollBarWrap::~QScrollBarWrap() {
@@ -59,7 +59,7 @@ void QScrollBarWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QScrollBar"), constructor);
 }
 
-Handle<Value> QScrollBarWrap::New(const Arguments& args) {
+Handle<Value> QScrollBarWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QScrollBarWrap* w = new QScrollBarWrap(args);
@@ -78,7 +78,7 @@ Handle<Value> QScrollBarWrap::NewInstance(QScrollBar *q) {
   return scope.Close(instance);
 }
 
-Handle<Value> QScrollBarWrap::Value(const Arguments& args) {
+Handle<Value> QScrollBarWrap::Value(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QScrollBarWrap* w = ObjectWrap::Unwrap<QScrollBarWrap>(args.This());
@@ -87,7 +87,7 @@ Handle<Value> QScrollBarWrap::Value(const Arguments& args) {
   return scope.Close(Integer::New(q->value()));
 }
 
-Handle<Value> QScrollBarWrap::SetValue(const Arguments& args) {
+Handle<Value> QScrollBarWrap::SetValue(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QScrollBarWrap* w = ObjectWrap::Unwrap<QScrollBarWrap>(args.This());

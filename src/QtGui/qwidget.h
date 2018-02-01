@@ -71,36 +71,36 @@ class QWidgetWrap : public node::ObjectWrap {
   QWidgetWrap(QWidgetImpl* parent);
   ~QWidgetWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::Arguments& args);
+  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> Resize(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Show(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Close(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Size(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Width(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Height(const v8::Arguments& args);
-  static v8::Handle<v8::Value> ObjectName(const v8::Arguments& args);
-  static v8::Handle<v8::Value> SetObjectName(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Parent(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Update(const v8::Arguments& args);
-  static v8::Handle<v8::Value> SetMouseTracking(const v8::Arguments& args);
-  static v8::Handle<v8::Value> HasMouseTracking(const v8::Arguments& args);
-  static v8::Handle<v8::Value> SetFocusPolicy(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Move(const v8::Arguments& args);
-  static v8::Handle<v8::Value> X(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Y(const v8::Arguments& args);
+  static v8::Handle<v8::Value> Resize(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Show(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Close(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Size(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Width(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Height(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> ObjectName(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> SetObjectName(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Parent(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Update(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> SetMouseTracking(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> HasMouseTracking(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> SetFocusPolicy(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Move(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> X(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Y(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // QUIRK
   // Event binding. These functions bind implemented event handlers above
   // to the given callbacks. This is necessary as in Qt such handlers
   // are virtual and we can't dynamically implement them from JS
-  static v8::Handle<v8::Value> PaintEvent(const v8::Arguments& args);
-  static v8::Handle<v8::Value> MousePressEvent(const v8::Arguments& args);
-  static v8::Handle<v8::Value> MouseReleaseEvent(const v8::Arguments& args);
-  static v8::Handle<v8::Value> MouseMoveEvent(const v8::Arguments& args);
-  static v8::Handle<v8::Value> KeyPressEvent(const v8::Arguments& args);
-  static v8::Handle<v8::Value> KeyReleaseEvent(const v8::Arguments& args);
+  static v8::Handle<v8::Value> PaintEvent(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> MousePressEvent(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> MouseReleaseEvent(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> MouseMoveEvent(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> KeyPressEvent(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> KeyReleaseEvent(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QWidgetImpl* q_;

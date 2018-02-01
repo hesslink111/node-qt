@@ -90,7 +90,7 @@ void QPainterWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QPainter"), constructor);
 }
 
-Handle<Value> QPainterWrap::New(const Arguments& args) {
+Handle<Value> QPainterWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   if (args.Length()>0) {
@@ -104,7 +104,7 @@ Handle<Value> QPainterWrap::New(const Arguments& args) {
   return args.This();
 }
 
-Handle<Value> QPainterWrap::Begin(const Arguments& args) {
+Handle<Value> QPainterWrap::Begin(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -138,7 +138,7 @@ Handle<Value> QPainterWrap::Begin(const Arguments& args) {
   return scope.Close(Boolean::New( false ));
 }
 
-Handle<Value> QPainterWrap::End(const Arguments& args) {
+Handle<Value> QPainterWrap::End(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -147,7 +147,7 @@ Handle<Value> QPainterWrap::End(const Arguments& args) {
   return scope.Close(Boolean::New( q->end() ));
 }
 
-Handle<Value> QPainterWrap::IsActive(const Arguments& args) {
+Handle<Value> QPainterWrap::IsActive(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -156,7 +156,7 @@ Handle<Value> QPainterWrap::IsActive(const Arguments& args) {
   return scope.Close(Boolean::New( q->isActive() ));
 }
 
-Handle<Value> QPainterWrap::Save(const Arguments& args) {
+Handle<Value> QPainterWrap::Save(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -167,7 +167,7 @@ Handle<Value> QPainterWrap::Save(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
-Handle<Value> QPainterWrap::Restore(const Arguments& args) {
+Handle<Value> QPainterWrap::Restore(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -180,7 +180,7 @@ Handle<Value> QPainterWrap::Restore(const Arguments& args) {
 
 // Supported implementations:
 //   setPen( QPen pen )
-Handle<Value> QPainterWrap::SetPen(const Arguments& args) {
+Handle<Value> QPainterWrap::SetPen(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -206,7 +206,7 @@ Handle<Value> QPainterWrap::SetPen(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
-Handle<Value> QPainterWrap::SetFont(const Arguments& args) {
+Handle<Value> QPainterWrap::SetFont(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -233,7 +233,7 @@ Handle<Value> QPainterWrap::SetFont(const Arguments& args) {
 }
 
 // This seems to be undocumented in Qt, but it exists!
-Handle<Value> QPainterWrap::SetMatrix(const Arguments& args) {
+Handle<Value> QPainterWrap::SetMatrix(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -263,7 +263,7 @@ Handle<Value> QPainterWrap::SetMatrix(const Arguments& args) {
 //   fillRect(int x, int y, int w, int h, QBrush brush)
 //   fillRect(int x, int y, int w, int h, QColor color)
 //   fillRect(int x, int y, int w, int h, Qt::GlobalColor color)
-Handle<Value> QPainterWrap::FillRect(const Arguments& args) {
+Handle<Value> QPainterWrap::FillRect(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -317,7 +317,7 @@ Handle<Value> QPainterWrap::FillRect(const Arguments& args) {
 
 // Supported versions:
 //   drawText(int x, int y, "text")
-Handle<Value> QPainterWrap::DrawText(const Arguments& args) {
+Handle<Value> QPainterWrap::DrawText(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -335,7 +335,7 @@ Handle<Value> QPainterWrap::DrawText(const Arguments& args) {
 
 // Supported versions:
 //   drawPixmap(int x, int y, QPixmap pixmap)
-Handle<Value> QPainterWrap::DrawPixmap(const Arguments& args) {
+Handle<Value> QPainterWrap::DrawPixmap(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -369,7 +369,7 @@ Handle<Value> QPainterWrap::DrawPixmap(const Arguments& args) {
 
 // Supported versions:
 //   drawImage( int x, int y, QImage image )
-Handle<Value> QPainterWrap::DrawImage(const Arguments& args) {
+Handle<Value> QPainterWrap::DrawImage(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
@@ -403,7 +403,7 @@ Handle<Value> QPainterWrap::DrawImage(const Arguments& args) {
 
 // Supported versions:
 //   strokePath( QPainterPath path, QPen pen )
-Handle<Value> QPainterWrap::StrokePath(const Arguments& args) {
+Handle<Value> QPainterWrap::StrokePath(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());

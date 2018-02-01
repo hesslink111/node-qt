@@ -60,7 +60,7 @@ void QKeyEventWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QKeyEvent"), constructor);
 }
 
-Handle<Value> QKeyEventWrap::New(const Arguments& args) {
+Handle<Value> QKeyEventWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QKeyEventWrap* w = new QKeyEventWrap;
@@ -79,7 +79,7 @@ Handle<Value> QKeyEventWrap::NewInstance(QKeyEvent q) {
   return scope.Close(instance);
 }
 
-Handle<Value> QKeyEventWrap::Key(const Arguments& args) {
+Handle<Value> QKeyEventWrap::Key(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QKeyEventWrap* w = node::ObjectWrap::Unwrap<QKeyEventWrap>(args.This());
@@ -88,7 +88,7 @@ Handle<Value> QKeyEventWrap::Key(const Arguments& args) {
   return scope.Close(Number::New(q->key()));
 }
 
-Handle<Value> QKeyEventWrap::Text(const Arguments& args) {
+Handle<Value> QKeyEventWrap::Text(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QKeyEventWrap* w = node::ObjectWrap::Unwrap<QKeyEventWrap>(args.This());

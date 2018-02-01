@@ -49,13 +49,13 @@ class QPixmapWrap : public node::ObjectWrap {
   QPixmapWrap(int width, int height);
   ~QPixmapWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::Arguments& args);
+  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> Width(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Height(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Save(const v8::Arguments& args);
-  static v8::Handle<v8::Value> Fill(const v8::Arguments& args);
+  static v8::Handle<v8::Value> Width(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Height(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Save(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static v8::Handle<v8::Value> Fill(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QPixmap* q_;

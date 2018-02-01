@@ -38,7 +38,7 @@ Persistent<Function> QSoundWrap::constructor;
 
 // Supported implementations:
 //   QSound ( QString filename )
-QSoundWrap::QSoundWrap(const Arguments& args) : q_(NULL) {
+QSoundWrap::QSoundWrap(const FunctionCallbackInfo<v8::Value>& args) : q_(NULL) {
   q_ = new QSound(qt_v8::ToQString(args[0]->ToString()));
 }
 
@@ -64,7 +64,7 @@ void QSoundWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QSound"), constructor);
 }
 
-Handle<Value> QSoundWrap::New(const Arguments& args) {
+Handle<Value> QSoundWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QSoundWrap* w = new QSoundWrap(args);
@@ -73,7 +73,7 @@ Handle<Value> QSoundWrap::New(const Arguments& args) {
   return args.This();
 }
 
-Handle<Value> QSoundWrap::Play(const Arguments& args) {
+Handle<Value> QSoundWrap::Play(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QSoundWrap* w = ObjectWrap::Unwrap<QSoundWrap>(args.This());
@@ -84,7 +84,7 @@ Handle<Value> QSoundWrap::Play(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
-Handle<Value> QSoundWrap::FileName(const Arguments& args) {
+Handle<Value> QSoundWrap::FileName(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QSoundWrap* w = ObjectWrap::Unwrap<QSoundWrap>(args.This());
@@ -93,7 +93,7 @@ Handle<Value> QSoundWrap::FileName(const Arguments& args) {
   return scope.Close(qt_v8::FromQString(q->fileName()));
 }
 
-Handle<Value> QSoundWrap::SetLoops(const Arguments& args) {
+Handle<Value> QSoundWrap::SetLoops(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QSoundWrap* w = ObjectWrap::Unwrap<QSoundWrap>(args.This());

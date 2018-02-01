@@ -37,7 +37,7 @@ Persistent<Function> QBrushWrap::constructor;
 
 // Supported constructors
 // QBrush(Qt::GlobalColor)  
-QBrushWrap::QBrushWrap(const Arguments& args) {
+QBrushWrap::QBrushWrap(const FunctionCallbackInfo<v8::Value>& args) {
   if (args.Length() > 0) {
     q_ = new QBrush((Qt::GlobalColor)args[0]->IntegerValue());
   } else {
@@ -62,7 +62,7 @@ void QBrushWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QBrush"), constructor);
 }
 
-Handle<Value> QBrushWrap::New(const Arguments& args) {
+Handle<Value> QBrushWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QBrushWrap* w = new QBrushWrap(args);

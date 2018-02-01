@@ -39,7 +39,7 @@ Persistent<Function> QPainterPathWrap::constructor;
 
 // Supported implementations:
 //   QPainterPath ( ??? )
-QPainterPathWrap::QPainterPathWrap(const Arguments& args) {
+QPainterPathWrap::QPainterPathWrap(const FunctionCallbackInfo<v8::Value>& args) {
   q_ = new QPainterPath();
 }
 
@@ -67,7 +67,7 @@ void QPainterPathWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QPainterPath"), constructor);
 }
 
-Handle<Value> QPainterPathWrap::New(const Arguments& args) {
+Handle<Value> QPainterPathWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterPathWrap* w = new QPainterPathWrap(args);
@@ -78,7 +78,7 @@ Handle<Value> QPainterPathWrap::New(const Arguments& args) {
 
 // Supported versions:
 //   moveTo( QPointF() )
-Handle<Value> QPainterPathWrap::MoveTo(const Arguments& args) {
+Handle<Value> QPainterPathWrap::MoveTo(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterPathWrap* w = ObjectWrap::Unwrap<QPainterPathWrap>(args.This());
@@ -104,7 +104,7 @@ Handle<Value> QPainterPathWrap::MoveTo(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
-Handle<Value> QPainterPathWrap::CurrentPosition(const Arguments& args) {
+Handle<Value> QPainterPathWrap::CurrentPosition(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterPathWrap* w = ObjectWrap::Unwrap<QPainterPathWrap>(args.This());
@@ -115,7 +115,7 @@ Handle<Value> QPainterPathWrap::CurrentPosition(const Arguments& args) {
 
 // Supported versions:
 //   lineTo( QPointF() )
-Handle<Value> QPainterPathWrap::LineTo(const Arguments& args) {
+Handle<Value> QPainterPathWrap::LineTo(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterPathWrap* w = ObjectWrap::Unwrap<QPainterPathWrap>(args.This());
@@ -141,7 +141,7 @@ Handle<Value> QPainterPathWrap::LineTo(const Arguments& args) {
   return scope.Close(Undefined());
 }
 
-Handle<Value> QPainterPathWrap::CloseSubpath(const Arguments& args) {
+Handle<Value> QPainterPathWrap::CloseSubpath(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QPainterPathWrap* w = ObjectWrap::Unwrap<QPainterPathWrap>(args.This());
