@@ -45,7 +45,7 @@ class QPointFWrap : public node::ObjectWrap {
   static v8::Handle<v8::Value> NewInstance(QPointF q);
 
  private:
-  QPointFWrap(const v8::& args);
+  QPointFWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QPointFWrap();
   static v8::Persistent<v8::Function> constructor;
   static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& info);
