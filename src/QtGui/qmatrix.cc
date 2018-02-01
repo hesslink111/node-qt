@@ -75,31 +75,33 @@ QMatrixWrap::~QMatrixWrap() {
 }
 
 void QMatrixWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QMatrix"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QMatrix"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("m11"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "m11"),
       FunctionTemplate::New(M11)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("m12"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "m12"),
       FunctionTemplate::New(M12)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("m21"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "m21"),
       FunctionTemplate::New(M21)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("m22"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "m22"),
       FunctionTemplate::New(M22)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("dx"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "dx"),
       FunctionTemplate::New(Dx)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("dy"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "dy"),
       FunctionTemplate::New(Dy)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("translate"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "translate"),
       FunctionTemplate::New(Translate)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("scale"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "scale"),
       FunctionTemplate::New(Scale)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QMatrix"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QMatrix"), constructor);
 }
 
 Handle<Value> QMatrixWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

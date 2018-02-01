@@ -48,23 +48,25 @@ QPainterPathWrap::~QPainterPathWrap() {
 }
 
 void QPainterPathWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QPainterPath"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QPainterPath"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("moveTo"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "moveTo"),
       FunctionTemplate::New(MoveTo)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("lineTo"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "lineTo"),
       FunctionTemplate::New(LineTo)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("currentPosition"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "currentPosition"),
       FunctionTemplate::New(CurrentPosition)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("closeSubpath"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "closeSubpath"),
       FunctionTemplate::New(CloseSubpath)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QPainterPath"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QPainterPath"), constructor);
 }
 
 Handle<Value> QPainterPathWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

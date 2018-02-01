@@ -47,21 +47,23 @@ QSoundWrap::~QSoundWrap() {
 }
 
 void QSoundWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QSound"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QSound"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("play"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "play"),
       FunctionTemplate::New(Play)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("fileName"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "fileName"),
       FunctionTemplate::New(FileName)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setLoops"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setLoops"),
       FunctionTemplate::New(SetLoops)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QSound"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QSound"), constructor);
 }
 
 Handle<Value> QSoundWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

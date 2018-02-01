@@ -45,20 +45,22 @@ QMouseEventWrap::~QMouseEventWrap() {
 }
 
 void QMouseEventWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QMouseEvent"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QMouseEvent"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("x"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "x"),
       FunctionTemplate::New(X)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("y"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "y"),
       FunctionTemplate::New(Y)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("button"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "button"),
       FunctionTemplate::New(Button)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QMouseEvent"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QMouseEvent"), constructor);
 }
 
 Handle<Value> QMouseEventWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

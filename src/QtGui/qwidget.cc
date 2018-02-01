@@ -174,61 +174,63 @@ QWidgetWrap::~QWidgetWrap() {
 }
 
 void QWidgetWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QWidget"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QWidget"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Wrapped methods
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("resize"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "resize"),
       FunctionTemplate::New(Resize)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("show"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "show"),
       FunctionTemplate::New(Show)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("close"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "close"),
       FunctionTemplate::New(Close)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("size"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "size"),
       FunctionTemplate::New(Size)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("width"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "width"),
       FunctionTemplate::New(Width)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("height"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "height"),
       FunctionTemplate::New(Height)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("parent"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "parent"),
       FunctionTemplate::New(Parent)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("objectName"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "objectName"),
       FunctionTemplate::New(ObjectName)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setObjectName"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setObjectName"),
       FunctionTemplate::New(SetObjectName)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("update"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "update"),
       FunctionTemplate::New(Update)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("hasMouseTracking"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "hasMouseTracking"),
       FunctionTemplate::New(HasMouseTracking)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setMouseTracking"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setMouseTracking"),
       FunctionTemplate::New(SetMouseTracking)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setFocusPolicy"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setFocusPolicy"),
       FunctionTemplate::New(SetFocusPolicy)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("move"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "move"),
       FunctionTemplate::New(Move)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("x"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "x"),
       FunctionTemplate::New(X)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("y"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "y"),
       FunctionTemplate::New(Y)->GetFunction());
 
   // Events
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("paintEvent"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "paintEvent"),
       FunctionTemplate::New(PaintEvent)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("mousePressEvent"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "mousePressEvent"),
       FunctionTemplate::New(MousePressEvent)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("mouseReleaseEvent"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "mouseReleaseEvent"),
       FunctionTemplate::New(MouseReleaseEvent)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("mouseMoveEvent"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "mouseMoveEvent"),
       FunctionTemplate::New(MouseMoveEvent)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("keyPressEvent"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "keyPressEvent"),
       FunctionTemplate::New(KeyPressEvent)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("keyReleaseEvent"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "keyReleaseEvent"),
       FunctionTemplate::New(KeyReleaseEvent)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QWidget"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QWidget"), constructor);
 }
 
 Handle<Value> QWidgetWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

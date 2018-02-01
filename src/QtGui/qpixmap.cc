@@ -45,23 +45,25 @@ QPixmapWrap::~QPixmapWrap() {
 }
 
 void QPixmapWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QPixmap"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QPixmap"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("width"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "width"),
       FunctionTemplate::New(Width)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("height"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "height"),
       FunctionTemplate::New(Height)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("save"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "save"),
       FunctionTemplate::New(Save)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("fill"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "fill"),
       FunctionTemplate::New(Fill)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QPixmap"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QPixmap"), constructor);
 }
 
 Handle<Value> QPixmapWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

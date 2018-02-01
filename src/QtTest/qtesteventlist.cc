@@ -46,22 +46,24 @@ QTestEventListWrap::~QTestEventListWrap() {
 }
 
 void QTestEventListWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QTestEventList"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QTestEventList"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("addMouseClick"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "addMouseClick"),
       FunctionTemplate::New(AddMouseClick)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("addKeyPress"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "addKeyPress"),
       FunctionTemplate::New(AddKeyPress)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("simulate"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "simulate"),
       FunctionTemplate::New(Simulate)->GetFunction());
 
   constructor = Persistent<Function>::New(
       tpl->GetFunction());
-  target->Set(String::NewSymbol("QTestEventList"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QTestEventList"), constructor);
 }
 
 Handle<Value> QTestEventListWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

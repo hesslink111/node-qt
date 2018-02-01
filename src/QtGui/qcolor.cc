@@ -75,25 +75,27 @@ QColorWrap::~QColorWrap() {
 }
 
 void QColorWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QColor"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QColor"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("red"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "red"),
       FunctionTemplate::New(Red)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("green"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "green"),
       FunctionTemplate::New(Green)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("blue"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "blue"),
       FunctionTemplate::New(Blue)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("alpha"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "alpha"),
       FunctionTemplate::New(Alpha)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("name"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "name"),
       FunctionTemplate::New(Name)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QColor"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QColor"), constructor);
 }
 
 Handle<Value> QColorWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

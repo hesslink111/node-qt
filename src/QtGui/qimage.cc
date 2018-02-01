@@ -55,17 +55,19 @@ QImageWrap::~QImageWrap() {
 }
 
 void QImageWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QImage"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QImage"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("isNull"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "isNull"),
       FunctionTemplate::New(IsNull)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QImage"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QImage"), constructor);
 }
 
 Handle<Value> QImageWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

@@ -100,31 +100,33 @@ QFontWrap::~QFontWrap() {
 }
 
 void QFontWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QFont"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QFont"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setFamily"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setFamily"),
       FunctionTemplate::New(SetFamily)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("family"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "family"),
       FunctionTemplate::New(Family)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setPixelSize"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setPixelSize"),
       FunctionTemplate::New(SetPixelSize)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("pixelSize"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "pixelSize"),
       FunctionTemplate::New(PixelSize)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setPointSize"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setPointSize"),
       FunctionTemplate::New(SetPointSize)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("pointSize"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "pointSize"),
       FunctionTemplate::New(PointSize)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setPointSizeF"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setPointSizeF"),
       FunctionTemplate::New(SetPointSizeF)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("pointSizeF"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "pointSizeF"),
       FunctionTemplate::New(PointSizeF)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QFont"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QFont"), constructor);
 }
 
 Handle<Value> QFontWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

@@ -112,13 +112,15 @@ QPenWrap::~QPenWrap() {
 }
 
 void QPenWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QPen"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QPen"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QPen"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QPen"), constructor);
 }
 
 Handle<Value> QPenWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

@@ -53,41 +53,43 @@ QPainterWrap::~QPainterWrap() {
 }
 
 void QPainterWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QPainter"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QPainter"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("begin"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "begin"),
       FunctionTemplate::New(Begin)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("end"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "end"),
       FunctionTemplate::New(End)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("isActive"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "isActive"),
       FunctionTemplate::New(IsActive)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("save"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "save"),
       FunctionTemplate::New(Save)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("restore"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "restore"),
       FunctionTemplate::New(Restore)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setPen"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setPen"),
       FunctionTemplate::New(SetPen)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setFont"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setFont"),
       FunctionTemplate::New(SetFont)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setMatrix"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setMatrix"),
       FunctionTemplate::New(SetMatrix)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("fillRect"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "fillRect"),
       FunctionTemplate::New(FillRect)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("drawText"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "drawText"),
       FunctionTemplate::New(DrawText)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("drawPixmap"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "drawPixmap"),
       FunctionTemplate::New(DrawPixmap)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("drawImage"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "drawImage"),
       FunctionTemplate::New(DrawImage)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("strokePath"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "strokePath"),
       FunctionTemplate::New(StrokePath)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QPainter"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QPainter"), constructor);
 }
 
 Handle<Value> QPainterWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

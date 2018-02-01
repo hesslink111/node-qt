@@ -51,15 +51,17 @@ QBrushWrap::~QBrushWrap() {
 }
 
 void QBrushWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QBrush"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QBrush"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QBrush"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QBrush"), constructor);
 }
 
 Handle<Value> QBrushWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

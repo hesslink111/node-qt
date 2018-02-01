@@ -44,19 +44,21 @@ QScrollBarWrap::~QScrollBarWrap() {
 }
 
 void QScrollBarWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QScrollBar"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QScrollBar"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("value"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "value"),
       FunctionTemplate::New(Value)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setValue"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setValue"),
       FunctionTemplate::New(SetValue)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QScrollBar"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QScrollBar"), constructor);
 }
 
 Handle<Value> QScrollBarWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

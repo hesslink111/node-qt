@@ -46,18 +46,20 @@ QKeyEventWrap::~QKeyEventWrap() {
 }
 
 void QKeyEventWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QKeyEvent"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QKeyEvent"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("key"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "key"),
       FunctionTemplate::New(Key)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("text"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "text"),
       FunctionTemplate::New(Text)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QKeyEvent"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QKeyEvent"), constructor);
 }
 
 Handle<Value> QKeyEventWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

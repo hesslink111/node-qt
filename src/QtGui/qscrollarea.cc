@@ -73,57 +73,59 @@ QScrollAreaWrap::~QScrollAreaWrap() {
 }
 
 void QScrollAreaWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QScrollArea"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QScrollArea"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Wrapped methods
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("resize"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "resize"),
       FunctionTemplate::New(Resize)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("show"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "show"),
       FunctionTemplate::New(Show)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("size"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "size"),
       FunctionTemplate::New(Size)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("width"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "width"),
       FunctionTemplate::New(Width)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("height"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "height"),
       FunctionTemplate::New(Height)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("parent"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "parent"),
       FunctionTemplate::New(Parent)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("objectName"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "objectName"),
       FunctionTemplate::New(ObjectName)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setObjectName"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setObjectName"),
       FunctionTemplate::New(SetObjectName)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("update"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "update"),
       FunctionTemplate::New(Update)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setFocusPolicy"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setFocusPolicy"),
       FunctionTemplate::New(SetFocusPolicy)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("move"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "move"),
       FunctionTemplate::New(Move)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("x"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "x"),
       FunctionTemplate::New(X)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("y"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "y"),
       FunctionTemplate::New(Y)->GetFunction());
 
   // QScrollArea-specific
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setWidget"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setWidget"),
       FunctionTemplate::New(SetWidget)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("widget"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "widget"),
       FunctionTemplate::New(Widget)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setFrameShape"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setFrameShape"),
       FunctionTemplate::New(SetFrameShape)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setVerticalScrollBarPolicy"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setVerticalScrollBarPolicy"),
       FunctionTemplate::New(SetVerticalScrollBarPolicy)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("setHorizontalScrollBarPolicy"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setHorizontalScrollBarPolicy"),
       FunctionTemplate::New(SetHorizontalScrollBarPolicy)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("verticalScrollBar"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "verticalScrollBar"),
       FunctionTemplate::New(VerticalScrollBar)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("horizontalScrollBar"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "horizontalScrollBar"),
       FunctionTemplate::New(HorizontalScrollBar)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QScrollArea"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QScrollArea"), constructor);
 }
 
 Handle<Value> QScrollAreaWrap::New(const FunctionCallbackInfo<v8::Value>& args) {

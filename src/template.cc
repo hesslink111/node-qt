@@ -46,17 +46,19 @@ __Template__Wrap::~__Template__Wrap() {
 }
 
 void __Template__Wrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+  
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("__Template__"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "__Template__"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("example"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "example"),
       FunctionTemplate::New(Example)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("__Template__"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "__Template__"), constructor);
 }
 
 Handle<Value> __Template__Wrap::New(const FunctionCallbackInfo<v8::Value>& args) {

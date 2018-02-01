@@ -61,7 +61,7 @@ void QApplicationWrap::Initialize(Handle<Object> target) {
       FunctionTemplate::New(isolate, Exec)->GetFunction());
 
   constructor.Reset(isolate, tpl->GetFunction());
-  target->Set(String::NewSymbol(isolate, "QApplication"), tpl->GetFunction());
+  target->Set(String::NewFromUtf8(isolate, "QApplication"), tpl->GetFunction());
 }
 
 void QApplicationWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
