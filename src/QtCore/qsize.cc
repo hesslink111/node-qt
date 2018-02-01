@@ -47,15 +47,15 @@ QSizeWrap::~QSizeWrap() {
 void QSizeWrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QSize"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "width"),
-      FunctionTemplate::New(Width)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewFromUtf8("height"),
-      FunctionTemplate::New(Height)->GetFunction());
+      FunctionTemplate::New(isolate, Width)->GetFunction());
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "height"),
+      FunctionTemplate::New(isolate, Height)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
   target->Set(String::NewFromUtf8(isolate, "QSize"), constructor);
