@@ -49,7 +49,7 @@ class QSizeWrap : public node::ObjectWrap {
   QSizeWrap();
   ~QSizeWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
   static v8::Handle<v8::Value> Width(const v8::FunctionCallbackInfo<v8::Value>& args);
