@@ -32,6 +32,7 @@
 
 #define BUILDING_NODE_EXTENSION
 #include <node.h>
+#include <node_object_wrap.h>
 #include <QPointF>
 
 class QPointFWrap : public node::ObjectWrap {
