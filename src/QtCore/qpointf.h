@@ -48,7 +48,7 @@ class QPointFWrap : public node::ObjectWrap {
   QPointFWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QPointFWrap();
   static v8::Persistent<v8::Function> constructor;
-  static void New(const v8::FunctionCallbackInfo<v8::Value>& info);
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
   static void IsNull(const v8::FunctionCallbackInfo<v8::Value>& args);

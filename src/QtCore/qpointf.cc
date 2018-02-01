@@ -37,9 +37,9 @@ Persistent<Function> QPointFWrap::constructor;
 
 // Supported implementations:
 //   QPointF (qreal x, qreal y)
-QPointFWrap::QPointFWrap(const FunctionCallbackInfo<v8::Value>& info) : q_(NULL) {
-  if (info[0]->IsNumber() && info[1]->IsNumber()) {
-    q_ = new QPointF(info[0]->NumberValue(), info[1]->NumberValue());
+QPointFWrap::QPointFWrap(const FunctionCallbackInfo<v8::Value>& args) : q_(NULL) {
+  if (args[0]->IsNumber() && args[1]->IsNumber()) {
+    q_ = new QPointF(args[0]->NumberValue(), args[1]->NumberValue());
   } else {
     q_ = new QPointF;
   }
@@ -59,46 +59,46 @@ void QPointFWrap::Initialize(Handle<Object> target) {
 
   // Prototype
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "x"),
-      FunctionTemplate::New(X)->GetFunction());
+      FunctionTemplate::New(isolate, X)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "y"),
-      FunctionTemplate::New(Y)->GetFunction());
+      FunctionTemplate::New(isolate, Y)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "isNull"),
-      FunctionTemplate::New(IsNull)->GetFunction());
+      FunctionTemplate::New(isolate, IsNull)->GetFunction());
 
   constructor.Reset(isolate, tpl->GetFunction());
   target->Set(String::NewFromUtf8(isolate, "QPointF"), tpl->GetFunction());
 }
 
-void QPointFWrap::New(const FunctionCallbackInfo<v8::Value>& info) {
+void QPointFWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QPointFWrap* w = new QPointFWrap(args);
-  w->Wrap(info.This());
+  w->Wrap(args.This());
 
-  info.GetReturnValue.Set(info.This());
+  args.GetReturnValue.Set(args.This());
 }
 
-void QPointFWrap::X(const FunctionCallbackInfo<v8::Value>& info) {
-  Isolate *isolate = info.GetIsolate();
+void QPointFWrap::X(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
-  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(info.This());
+  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(args.This());
   QPointF* q = w->GetWrapped();
 
-  info.GetReturnValue().Set(Number::New(isolate, q->x()));
+  args.GetReturnValue().Set(Number::New(isolate, q->x()));
 }
 
-void QPointFWrap::Y(const FunctionCallbackInfo<v8::Value>& info) {
-  Isolate *isolate = info.GetIsolate();
+void QPointFWrap::Y(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
-  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(info.This());
+  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(args.This());
   QPointF* q = w->GetWrapped();
 
-  info.GetReturnValue().Set(Number::New(isolate, q->y()));
+  args.GetReturnValue().Set(Number::New(isolate, q->y()));
 }
 
-void QPointFWrap::IsNull(const FunctionCallbackInfo<v8::Value>& info) {
-  Isolate *isolate = info.GetIsolate();
+void QPointFWrap::IsNull(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
-  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(info.This());
+  QPointFWrap* w = ObjectWrap::Unwrap<QPointFWrap>(args.This());
   QPointF* q = w->GetWrapped();
 
-  info.GetReturnValue().Set(Boolean::New(isolate, q->isNull()));
+  args.GetReturnValue().Set(Boolean::New(isolate, q->isNull()));
 }
