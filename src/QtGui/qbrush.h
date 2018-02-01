@@ -32,6 +32,7 @@
 
 #define BUILDING_NODE_EXTENSION
 #include <node.h>
+#include <node_object_wrap.h>
 #include <QBrush>
 
 class QBrushWrap : public node::ObjectWrap {

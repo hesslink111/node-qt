@@ -60,7 +60,7 @@ void QSizeWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewSymbol("QSize"), constructor);
 }
 
-Handle<Value> QSizeWrap::New(const Arguments& args) {
+Handle<Value> QSizeWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QSizeWrap* w = new QSizeWrap();
@@ -79,7 +79,7 @@ Handle<Value> QSizeWrap::NewInstance(QSize q) {
   return scope.Close(instance);
 }
 
-Handle<Value> QSizeWrap::Width(const Arguments& args) {
+Handle<Value> QSizeWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QSizeWrap* w = ObjectWrap::Unwrap<QSizeWrap>(args.This());
@@ -88,7 +88,7 @@ Handle<Value> QSizeWrap::Width(const Arguments& args) {
   return scope.Close(Number::New(q->width()));
 }
 
-Handle<Value> QSizeWrap::Height(const Arguments& args) {
+Handle<Value> QSizeWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QSizeWrap* w = ObjectWrap::Unwrap<QSizeWrap>(args.This());

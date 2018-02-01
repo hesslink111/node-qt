@@ -31,6 +31,7 @@
 #define QTESTEVENTLISTWRAP_H
 
 #include <node.h>
+#include <node_object_wrap.h>
 #define QT_GUI_LIB // necessary for QTestEventList
 #include <QTestEventList>
 
