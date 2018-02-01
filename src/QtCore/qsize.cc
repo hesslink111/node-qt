@@ -64,7 +64,7 @@ void QSizeWrap::Initialize(Handle<Object> target) {
 void QSizeWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QSizeWrap* w = new QSizeWrap();
   w->Wrap(args.This());
-  args->GetReturnValue().Set(args.This());
+  args.GetReturnValue().Set(args.This());
 }
 
 Handle<Value> QSizeWrap::NewInstance(QSize q) {
@@ -81,7 +81,7 @@ void QSizeWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
   QSizeWrap* w = ObjectWrap::Unwrap<QSizeWrap>(args.This());
   QSize* q = w->GetWrapped();
 
-  args->GetReturnValue().Set(Number::New(q->width()));
+  args.GetReturnValue().Set(Number::New(q->width()));
 }
 
 void QSizeWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
@@ -90,5 +90,5 @@ void QSizeWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
   QSizeWrap* w = ObjectWrap::Unwrap<QSizeWrap>(args.This());
   QSize* q = w->GetWrapped();
 
-  args->GetReturnValue(Number::New(q->height()));
+  args.GetReturnValue(Number::New(q->height()));
 }
