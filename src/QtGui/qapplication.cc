@@ -61,7 +61,7 @@ void QApplicationWrap::Initialize(Handle<Object> target) {
       FunctionTemplate::New(isolate, Exec)->GetFunction());
 
   constructor.Reset(isolate, tpl->GetFunction());
-  target->Set(String::NewSymbol(isolate, "QApplication"), constructor);
+  target->Set(String::NewSymbol(isolate, "QApplication"), tpl->GetFunction());
 }
 
 void QApplicationWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
@@ -72,23 +72,19 @@ void QApplicationWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
 }
 
 void QApplicationWrap::ProcessEvents(const FunctionCallbackInfo<v8::Value>& args) {
-  Isolate *isolate = args.GetIsolate();
-
   QApplicationWrap* w = ObjectWrap::Unwrap<QApplicationWrap>(args.This());
   QApplication* q = w->GetWrapped();
 
   q->processEvents();
 
-  args.GetReturnValue().Set(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 void QApplicationWrap::Exec(const FunctionCallbackInfo<v8::Value>& args) {
-  Isolate *isolate = args.GetIsolate();
-
   QApplicationWrap* w = ObjectWrap::Unwrap<QApplicationWrap>(args.This());
   QApplication* q = w->GetWrapped();
 
   q->exec();
 
-  args.GetReturnValue().Set(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
