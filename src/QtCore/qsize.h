@@ -38,7 +38,7 @@
 class QSizeWrap : public node::ObjectWrap {
  public:
   static void Initialize(v8::Handle<v8::Object> target);
-  static v8::Handle<v8::Value> NewInstance(QSize q);
+  static void NewInstance(QSize q);
   QSize* GetWrapped() const { return q_; };
   void SetWrapped(QSize q) { 
     if (q_) delete q_; 
