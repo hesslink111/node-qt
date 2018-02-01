@@ -48,12 +48,12 @@ class QPointFWrap : public node::ObjectWrap {
   QPointFWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QPointFWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& info);
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& info);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> IsNull(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> X(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Y(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void IsNull(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void X(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Y(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QPointF* q_;
