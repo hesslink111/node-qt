@@ -58,7 +58,7 @@ void QSizeWrap::Initialize(Handle<Object> target) {
       FunctionTemplate::New(isolate, Height)->GetFunction());
 
   constructor.Reset(isolate, tpl->GetFunction());
-  target->Set(String::NewFromUtf8(isolate, "QSize"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QSize"), tpl->GetFunction());
 }
 
 void QSizeWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
