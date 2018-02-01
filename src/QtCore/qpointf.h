@@ -43,7 +43,6 @@ class QPointFWrap : public node::ObjectWrap {
     if (q_) delete q_; 
     q_ = new QPointF(q); 
   };
-  static v8::Handle<v8::Value> NewInstance(QPointF q);
 
  private:
   QPointFWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
