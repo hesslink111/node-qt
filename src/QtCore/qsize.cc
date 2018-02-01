@@ -68,17 +68,19 @@ void QSizeWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
 }
 
 void QSizeWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args->GetIsolate();
+
   QSizeWrap* w = ObjectWrap::Unwrap<QSizeWrap>(args.This());
   QSize* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->width()));
+  args.GetReturnValue().Set(Number::New(isolate, q->width()));
 }
 
 void QSizeWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+  Isolate *isolate = args->GetIsolate();
 
   QSizeWrap* w = ObjectWrap::Unwrap<QSizeWrap>(args.This());
   QSize* q = w->GetWrapped();
 
-  args.GetReturnValue(Number::New(q->height()));
+  args.GetReturnValue(Number::New(isolate, q->height()));
 }
