@@ -47,49 +47,48 @@ QApplicationWrap::~QApplicationWrap() {
 }
 
 void QApplicationWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target->GetIsolate();
+
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QApplication"));
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QApplication"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("processEvents"),
-      FunctionTemplate::New(ProcessEvents)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("exec"),
-      FunctionTemplate::New(Exec)->GetFunction());
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "processEvents"),
+      FunctionTemplate::New(isolate, ProcessEvents)->GetFunction());
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "exec"),
+      FunctionTemplate::New(isolate, Exec)->GetFunction());
 
-  constructor = Persistent<Function>::New(
-      tpl->GetFunction());
-  target->Set(String::NewSymbol("QApplication"), constructor);
+  constructor.Reset(isolate, tpl->GetFunction());
+  target->Set(String::NewSymbol(isolate, "QApplication"), constructor);
 }
 
-Handle<Value> QApplicationWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QApplicationWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QApplicationWrap* w = new QApplicationWrap();
   w->Wrap(args.This());
 
-  return args.This();
+  args.GetReturnValue().Set(args.This());
 }
 
-Handle<Value> QApplicationWrap::ProcessEvents(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QApplicationWrap::ProcessEvents(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QApplicationWrap* w = ObjectWrap::Unwrap<QApplicationWrap>(args.This());
   QApplication* q = w->GetWrapped();
 
   q->processEvents();
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().Set(Undefined());
 }
 
-Handle<Value> QApplicationWrap::Exec(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QApplicationWrap::Exec(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QApplicationWrap* w = ObjectWrap::Unwrap<QApplicationWrap>(args.This());
   QApplication* q = w->GetWrapped();
 
   q->exec();
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().Set(Undefined());
 }
