@@ -45,19 +45,20 @@ QSizeWrap::~QSizeWrap() {
 }
 
 void QSizeWrap::Initialize(Handle<Object> target) {
+  Isolate *isolate = target.GetIsolate();
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("QSize"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "QSize"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("width"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "width"),
       FunctionTemplate::New(Width)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("height"),
+  tpl->PrototypeTemplate()->Set(String::NewFromUtf8("height"),
       FunctionTemplate::New(Height)->GetFunction());
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewSymbol("QSize"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QSize"), constructor);
 }
 
 Handle<Value> QSizeWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
