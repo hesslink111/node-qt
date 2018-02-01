@@ -67,14 +67,12 @@ void QSizeWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   args.GetReturnValue().Set(args.This());
 }
 
-Handle<Value> QSizeWrap::NewInstance(QSize q) {
-  HandleScope scope;
-  
+void QSizeWrap::NewInstance(QSize q) {
   Local<Object> instance = constructor->NewInstance(0, NULL);
   QSizeWrap* w = node::ObjectWrap::Unwrap<QSizeWrap>(instance);
   w->SetWrapped(q);
 
-  return scope.Close(instance);
+  args.GetReturnValue().Set(instance);
 }
 
 void QSizeWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
