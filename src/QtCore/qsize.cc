@@ -68,7 +68,7 @@ void QSizeWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
 }
 
 void QSizeWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
-  Isolate *isolate = args->GetIsolate();
+  Isolate *isolate = args.GetIsolate();
 
   QSizeWrap* w = ObjectWrap::Unwrap<QSizeWrap>(args.This());
   QSize* q = w->GetWrapped();
@@ -77,10 +77,10 @@ void QSizeWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
 }
 
 void QSizeWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
-  Isolate *isolate = args->GetIsolate();
+  Isolate *isolate = args.GetIsolate();
 
   QSizeWrap* w = ObjectWrap::Unwrap<QSizeWrap>(args.This());
   QSize* q = w->GetWrapped();
 
-  args.GetReturnValue(Number::New(isolate, q->height()));
+  args.GetReturnValue().Set(Number::New(isolate, q->height()));
 }
