@@ -45,7 +45,7 @@ QSizeWrap::~QSizeWrap() {
 }
 
 void QSizeWrap::Initialize(Handle<Object> target) {
-  Isolate *isolate = target.GetIsolate();
+  Isolate *isolate = target->GetIsolate();
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QSize"));
