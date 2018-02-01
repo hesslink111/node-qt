@@ -77,20 +77,18 @@ Handle<Value> QSizeWrap::NewInstance(QSize q) {
   return scope.Close(instance);
 }
 
-Handle<Value> QSizeWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QSizeWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
   QSizeWrap* w = ObjectWrap::Unwrap<QSizeWrap>(args.This());
   QSize* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->width()));
+  args->GetReturnValue().Set(Number::New(q->width()));
 }
 
-Handle<Value> QSizeWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
+void QSizeWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QSizeWrap* w = ObjectWrap::Unwrap<QSizeWrap>(args.This());
   QSize* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->height()));
+  args->GetReturnValue(Number::New(q->height()));
 }
