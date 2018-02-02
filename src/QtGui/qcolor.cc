@@ -60,7 +60,7 @@ QColorWrap::QColorWrap(const FunctionCallbackInfo<v8::Value>& args) {
         qt_v8::ToQString(args[0]->ToObject()->GetConstructorName());
 
     if (arg0_constructor != "QColor")
-      ThrowException(Exception::TypeError(
+      isolate->ThrowException(Exception::TypeError(
         String::NewFromUtf8(isolate, "QColor::QColor: bad argument")));
 
     // Unwrap obj
