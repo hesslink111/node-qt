@@ -49,7 +49,7 @@ void QKeyEventWrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QKeyEvent"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
@@ -71,7 +71,7 @@ void QKeyEventWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
 
 Local<Value> QKeyEventWrap::NewInstance(Isolate *isolate, QKeyEvent q) {
   Local<Function> cons = Local<Function>::New(isolate, constructor);
-  Local<Object> instance = constructor->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
+  Local<Object> instance = cons->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
   QKeyEventWrap* w = node::ObjectWrap::Unwrap<QKeyEventWrap>(instance);
   w->SetWrapped(q);
 
