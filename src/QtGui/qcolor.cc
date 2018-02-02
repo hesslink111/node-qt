@@ -41,6 +41,8 @@ Persistent<Function> QColorWrap::constructor;
 //   QColor ( QString color )
 //   QColor ( QColor )
 QColorWrap::QColorWrap(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+
   if (args.Length() >= 3) {
     // QColor ( int r, int g, int b, int a = 255 )
     q_ = new QColor(
@@ -59,7 +61,7 @@ QColorWrap::QColorWrap(const FunctionCallbackInfo<v8::Value>& args) {
 
     if (arg0_constructor != "QColor")
       ThrowException(Exception::TypeError(
-        String::New("QColor::QColor: bad argument")));
+        String::NewFromUtf8(isolate, "QColor::QColor: bad argument")));
 
     // Unwrap obj
     QColorWrap* q_wrap = ObjectWrap::Unwrap<QColorWrap>(
@@ -78,73 +80,71 @@ void QColorWrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QColor"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "red"),
-      FunctionTemplate::New(Red)->GetFunction());
+      FunctionTemplate::New(isolate, Red)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "green"),
-      FunctionTemplate::New(Green)->GetFunction());
+      FunctionTemplate::New(isolate, Green)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "blue"),
-      FunctionTemplate::New(Blue)->GetFunction());
+      FunctionTemplate::New(isolate, Blue)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "alpha"),
-      FunctionTemplate::New(Alpha)->GetFunction());
+      FunctionTemplate::New(isolate, Alpha)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "name"),
-      FunctionTemplate::New(Name)->GetFunction());
+      FunctionTemplate::New(isolate, Name)->GetFunction());
 
-  constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewFromUtf8(isolate, "QColor"), constructor);
+  constructor.Reset(isolate, tpl->GetFunction());
+  target->Set(String::NewFromUtf8(isolate, "QColor"), tpl->GetFunction());
 }
 
-Handle<Value> QColorWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QColorWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QColorWrap* w = new QColorWrap(args);
   w->Wrap(args.This());
 
-  return args.This();
+  args.GetReturnValue().Set(args.This());
 }
 
-Handle<Value> QColorWrap::Red(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QColorWrap::Red(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
   QColor* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->red()));
+  args.GetReturnValue().Set(Number::New(isolate, q->red()));
 }
 
-Handle<Value> QColorWrap::Green(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QColorWrap::Green(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
   QColor* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->green()));
+  args.GetReturnValue().Set(Number::New(isolate, q->green()));
 }
 
-Handle<Value> QColorWrap::Blue(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QColorWrap::Blue(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
   QColor* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->blue()));
+  args.GetReturnValue().Set(Number::New(isolate, q->blue()));
 }
 
-Handle<Value> QColorWrap::Alpha(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QColorWrap::Alpha(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
   QColor* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->alpha()));
+  args.GetReturnValue().Set(Number::New(isolate, q->alpha()));
 }
 
-Handle<Value> QColorWrap::Name(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QColorWrap::Name(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
   QColor* q = w->GetWrapped();

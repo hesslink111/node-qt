@@ -44,14 +44,14 @@ class QColorWrap : public node::ObjectWrap {
   QColorWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QColorWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> Red(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Green(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Blue(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Alpha(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Name(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Red(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Green(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Blue(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Alpha(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Name(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QColor* q_;
