@@ -85,5 +85,5 @@ Handle<Value> QImageWrap::IsNull(const FunctionCallbackInfo<v8::Value>& args) {
   QImageWrap* w = ObjectWrap::Unwrap<QImageWrap>(args.This());
   QImage* q = w->GetWrapped();
 
-  return scope.Close(Boolean::New(q->isNull()));
+  args.GetReturnValue().Set(Boolean::New(q->isNull()));
 }

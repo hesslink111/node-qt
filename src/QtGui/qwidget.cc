@@ -64,8 +64,6 @@ QWidgetImpl::~QWidgetImpl() {
 }
 
 void QWidgetImpl::paintEvent(QPaintEvent* e) {
-  HandleScope scope;
-  
   if (!paintEventCallback_->IsFunction())
     return;
 
@@ -78,8 +76,6 @@ void QWidgetImpl::paintEvent(QPaintEvent* e) {
 
 void QWidgetImpl::mousePressEvent(QMouseEvent* e) {
   e->ignore(); // ensures event bubbles up
-
-  HandleScope scope;
   
   if (!mousePressCallback_->IsFunction())
     return;
@@ -95,8 +91,6 @@ void QWidgetImpl::mousePressEvent(QMouseEvent* e) {
 
 void QWidgetImpl::mouseReleaseEvent(QMouseEvent* e) {
   e->ignore(); // ensures event bubbles up
-
-  HandleScope scope;
   
   if (!mouseReleaseCallback_->IsFunction())
     return;
@@ -112,8 +106,6 @@ void QWidgetImpl::mouseReleaseEvent(QMouseEvent* e) {
 
 void QWidgetImpl::mouseMoveEvent(QMouseEvent* e) {
   e->ignore(); // ensures event bubbles up
-
-  HandleScope scope;
   
   if (!mouseMoveCallback_->IsFunction())
     return;
@@ -129,8 +121,6 @@ void QWidgetImpl::mouseMoveEvent(QMouseEvent* e) {
 
 void QWidgetImpl::keyPressEvent(QKeyEvent* e) {
   e->ignore(); // ensures event bubbles up
-
-  HandleScope scope;
   
   if (!keyPressCallback_->IsFunction())
     return;
@@ -146,8 +136,6 @@ void QWidgetImpl::keyPressEvent(QKeyEvent* e) {
 
 void QWidgetImpl::keyReleaseEvent(QKeyEvent* e) {
   e->ignore(); // ensures event bubbles up
-
-  HandleScope scope;
   
   if (!keyReleaseCallback_->IsFunction())
     return;
@@ -233,7 +221,7 @@ void QWidgetWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewFromUtf8(isolate, "QWidget"), constructor);
 }
 
-Handle<Value> QWidgetWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
+void QWidgetWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
   QWidgetImpl* q_parent = 0;
 
@@ -248,84 +236,72 @@ Handle<Value> QWidgetWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   return args.This();
 }
 
-Handle<Value> QWidgetWrap::Resize(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::Resize(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
   q->resize(args[0]->NumberValue(), args[1]->NumberValue());
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QWidgetWrap::Show(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::Show(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
   q->show();
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QWidgetWrap::Close(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::Close(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
   q->close();
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QWidgetWrap::Size(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QWidgetWrap::Size(const FunctionCallbackInfo<v8::Value>& args) {
+  QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
+  QWidgetImpl* q = w->GetWrapped();
+
+  args.GetReturnValue().Set(QSizeWrap::NewInstance(q->size()) );
+}
+
+void QWidgetWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  return scope.Close( QSizeWrap::NewInstance(q->size()) );
+  args.GetReturnValue().Set(Integer::New(isolate, q->width()) );
 }
 
-Handle<Value> QWidgetWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QWidgetWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  return scope.Close( Integer::New(q->width()) );
+  args.GetReturnValue().Set(Integer::New(isolate, q->height()) );
 }
 
-Handle<Value> QWidgetWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::ObjectName(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  return scope.Close( Integer::New(q->height()) );
+  args.GetReturnValue().Set(qt_v8::FromQString(q->objectName()));
 }
 
-Handle<Value> QWidgetWrap::ObjectName(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
-  QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
-  QWidgetImpl* q = w->GetWrapped();
-
-  return scope.Close(qt_v8::FromQString(q->objectName()));
-}
-
-Handle<Value> QWidgetWrap::SetObjectName(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::SetObjectName(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
   q->setObjectName(qt_v8::ToQString(args[0]->ToString()));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 //
@@ -334,22 +310,18 @@ Handle<Value> QWidgetWrap::SetObjectName(const FunctionCallbackInfo<v8::Value>& 
 // Qt: Parent() returns QObject
 // Intended mostly for sanity checks
 //
-Handle<Value> QWidgetWrap::Parent(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::Parent(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  return scope.Close(qt_v8::FromQString(q->parent()->objectName()));
+  args.GetReturnValue().Set(qt_v8::FromQString(q->parent()->objectName()));
 }
 
 //
 // PaintEvent()
 // Binds a callback to Qt's event
 //
-Handle<Value> QWidgetWrap::PaintEvent(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::PaintEvent(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
@@ -357,16 +329,14 @@ Handle<Value> QWidgetWrap::PaintEvent(const FunctionCallbackInfo<v8::Value>& arg
   q->paintEventCallback_ = Persistent<Function>::New(
       Local<Function>::Cast(args[0]));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 //
 // MousePressEvent()
 // Binds a callback to Qt's event
 //
-Handle<Value> QWidgetWrap::MousePressEvent(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::MousePressEvent(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
@@ -374,16 +344,14 @@ Handle<Value> QWidgetWrap::MousePressEvent(const FunctionCallbackInfo<v8::Value>
   q->mousePressCallback_ = Persistent<Function>::New(
       Local<Function>::Cast(args[0]));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 //
 // MouseReleaseEvent()
 // Binds a callback to Qt's event
 //
-Handle<Value> QWidgetWrap::MouseReleaseEvent(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::MouseReleaseEvent(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
@@ -391,16 +359,14 @@ Handle<Value> QWidgetWrap::MouseReleaseEvent(const FunctionCallbackInfo<v8::Valu
   q->mouseReleaseCallback_ = Persistent<Function>::New(
       Local<Function>::Cast(args[0]));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 //
 // MouseMoveEvent()
 // Binds a callback to Qt's event
 //
-Handle<Value> QWidgetWrap::MouseMoveEvent(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::MouseMoveEvent(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
@@ -408,16 +374,14 @@ Handle<Value> QWidgetWrap::MouseMoveEvent(const FunctionCallbackInfo<v8::Value>&
   q->mouseMoveCallback_ = Persistent<Function>::New(
       Local<Function>::Cast(args[0]));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 //
 // KeyPressEvent()
 // Binds a callback to Qt's event
 //
-Handle<Value> QWidgetWrap::KeyPressEvent(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::KeyPressEvent(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
@@ -425,16 +389,14 @@ Handle<Value> QWidgetWrap::KeyPressEvent(const FunctionCallbackInfo<v8::Value>& 
   q->keyPressCallback_ = Persistent<Function>::New(
       Local<Function>::Cast(args[0]));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 //
 // KeyReleaseEvent()
 // Binds a callback to Qt's event
 //
-Handle<Value> QWidgetWrap::KeyReleaseEvent(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::KeyReleaseEvent(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
@@ -442,78 +404,68 @@ Handle<Value> QWidgetWrap::KeyReleaseEvent(const FunctionCallbackInfo<v8::Value>
   q->keyReleaseCallback_ = Persistent<Function>::New(
       Local<Function>::Cast(args[0]));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QWidgetWrap::Update(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::Update(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
   q->update();
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QWidgetWrap::HasMouseTracking(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::HasMouseTracking(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  return scope.Close(Boolean::New(q->hasMouseTracking()));
+  args.GetReturnValue().Set(Boolean::New(q->hasMouseTracking()));
 }
 
-Handle<Value> QWidgetWrap::SetMouseTracking(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::SetMouseTracking(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
   q->setMouseTracking(args[0]->BooleanValue());
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QWidgetWrap::SetFocusPolicy(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::SetFocusPolicy(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
   q->setFocusPolicy((Qt::FocusPolicy)(args[0]->IntegerValue()));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 // Supported implementations:
 //    move (int x, int y)
-Handle<Value> QWidgetWrap::Move(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QWidgetWrap::Move(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
   q->move(args[0]->IntegerValue(), args[1]->IntegerValue());
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QWidgetWrap::X(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QWidgetWrap::X(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  return scope.Close(Integer::New(q->x()));
+  args.GetReturnValue().Set(Integer::New(isolate, q->x()));
 }
 
-Handle<Value> QWidgetWrap::Y(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QWidgetWrap::Y(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  return scope.Close(Integer::New(q->y()));
+  args.GetReturnValue().Set(Integer::New(isolate, q->y()));
 }

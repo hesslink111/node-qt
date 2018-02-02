@@ -113,7 +113,7 @@ Handle<Value> QColorWrap::Red(const FunctionCallbackInfo<v8::Value>& args) {
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
   QColor* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->red()));
+  args.GetReturnValue().Set(Number::New(q->red()));
 }
 
 Handle<Value> QColorWrap::Green(const FunctionCallbackInfo<v8::Value>& args) {
@@ -122,7 +122,7 @@ Handle<Value> QColorWrap::Green(const FunctionCallbackInfo<v8::Value>& args) {
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
   QColor* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->green()));
+  args.GetReturnValue().Set(Number::New(q->green()));
 }
 
 Handle<Value> QColorWrap::Blue(const FunctionCallbackInfo<v8::Value>& args) {
@@ -131,7 +131,7 @@ Handle<Value> QColorWrap::Blue(const FunctionCallbackInfo<v8::Value>& args) {
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
   QColor* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->blue()));
+  args.GetReturnValue().Set(Number::New(q->blue()));
 }
 
 Handle<Value> QColorWrap::Alpha(const FunctionCallbackInfo<v8::Value>& args) {
@@ -140,7 +140,7 @@ Handle<Value> QColorWrap::Alpha(const FunctionCallbackInfo<v8::Value>& args) {
   QColorWrap* w = ObjectWrap::Unwrap<QColorWrap>(args.This());
   QColor* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->alpha()));
+  args.GetReturnValue().Set(Number::New(q->alpha()));
 }
 
 Handle<Value> QColorWrap::Name(const FunctionCallbackInfo<v8::Value>& args) {
@@ -151,5 +151,5 @@ Handle<Value> QColorWrap::Name(const FunctionCallbackInfo<v8::Value>& args) {
 
   QString name = q->name();
 
-  return scope.Close(qt_v8::FromQString(name));
+  args.GetReturnValue().Set(qt_v8::FromQString(name));
 }

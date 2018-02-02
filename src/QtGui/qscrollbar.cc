@@ -77,7 +77,7 @@ Handle<Value> QScrollBarWrap::NewInstance(QScrollBar *q) {
   QScrollBarWrap* w = node::ObjectWrap::Unwrap<QScrollBarWrap>(instance);
   w->SetWrapped(q);
 
-  return scope.Close(instance);
+  args.GetReturnValue().Set(instance);
 }
 
 Handle<Value> QScrollBarWrap::Value(const FunctionCallbackInfo<v8::Value>& args) {
@@ -86,7 +86,7 @@ Handle<Value> QScrollBarWrap::Value(const FunctionCallbackInfo<v8::Value>& args)
   QScrollBarWrap* w = ObjectWrap::Unwrap<QScrollBarWrap>(args.This());
   QScrollBar* q = w->GetWrapped();
 
-  return scope.Close(Integer::New(q->value()));
+  args.GetReturnValue().Set(Integer::New(q->value()));
 }
 
 Handle<Value> QScrollBarWrap::SetValue(const FunctionCallbackInfo<v8::Value>& args) {
@@ -97,5 +97,5 @@ Handle<Value> QScrollBarWrap::SetValue(const FunctionCallbackInfo<v8::Value>& ar
 
   q->setValue(args[0]->IntegerValue());
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }

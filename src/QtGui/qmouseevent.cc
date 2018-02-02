@@ -79,7 +79,7 @@ Handle<Value> QMouseEventWrap::NewInstance(QMouseEvent q) {
   QMouseEventWrap* w = node::ObjectWrap::Unwrap<QMouseEventWrap>(instance);
   w->SetWrapped(q);
 
-  return scope.Close(instance);
+  args.GetReturnValue().Set(instance);
 }
 
 Handle<Value> QMouseEventWrap::X(const FunctionCallbackInfo<v8::Value>& args) {
@@ -88,7 +88,7 @@ Handle<Value> QMouseEventWrap::X(const FunctionCallbackInfo<v8::Value>& args) {
   QMouseEventWrap* w = node::ObjectWrap::Unwrap<QMouseEventWrap>(args.This());
   QMouseEvent* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->x()));
+  args.GetReturnValue().Set(Number::New(q->x()));
 }
 
 Handle<Value> QMouseEventWrap::Y(const FunctionCallbackInfo<v8::Value>& args) {
@@ -97,7 +97,7 @@ Handle<Value> QMouseEventWrap::Y(const FunctionCallbackInfo<v8::Value>& args) {
   QMouseEventWrap* w = node::ObjectWrap::Unwrap<QMouseEventWrap>(args.This());
   QMouseEvent* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->y()));
+  args.GetReturnValue().Set(Number::New(q->y()));
 }
 
 Handle<Value> QMouseEventWrap::Button(const FunctionCallbackInfo<v8::Value>& args) {
@@ -106,5 +106,5 @@ Handle<Value> QMouseEventWrap::Button(const FunctionCallbackInfo<v8::Value>& arg
   QMouseEventWrap* w = node::ObjectWrap::Unwrap<QMouseEventWrap>(args.This());
   QMouseEvent* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->button()));
+  args.GetReturnValue().Set(Number::New(q->button()));
 }

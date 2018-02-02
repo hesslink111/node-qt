@@ -103,7 +103,7 @@ Handle<Value> QPainterPathWrap::MoveTo(const FunctionCallbackInfo<v8::Value>& ar
 
   q->moveTo(*pointf);
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QPainterPathWrap::CurrentPosition(const FunctionCallbackInfo<v8::Value>& args) {
@@ -112,7 +112,7 @@ Handle<Value> QPainterPathWrap::CurrentPosition(const FunctionCallbackInfo<v8::V
   QPainterPathWrap* w = ObjectWrap::Unwrap<QPainterPathWrap>(args.This());
   QPainterPath* q = w->GetWrapped();
 
-  return scope.Close(QPointFWrap::NewInstance(q->currentPosition()));
+  args.GetReturnValue().Set(QPointFWrap::NewInstance(q->currentPosition()));
 }
 
 // Supported versions:
@@ -140,7 +140,7 @@ Handle<Value> QPainterPathWrap::LineTo(const FunctionCallbackInfo<v8::Value>& ar
 
   q->lineTo(*pointf);
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QPainterPathWrap::CloseSubpath(const FunctionCallbackInfo<v8::Value>& args) {
@@ -151,5 +151,5 @@ Handle<Value> QPainterPathWrap::CloseSubpath(const FunctionCallbackInfo<v8::Valu
 
   q->closeSubpath();
   
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }

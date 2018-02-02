@@ -83,7 +83,7 @@ Handle<Value> QTestEventListWrap::AddMouseClick(const FunctionCallbackInfo<v8::V
 
   q->addMouseClick((Qt::MouseButton)args[0]->IntegerValue());
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QTestEventListWrap::AddKeyPress(const FunctionCallbackInfo<v8::Value>& args) {
@@ -97,7 +97,7 @@ Handle<Value> QTestEventListWrap::AddKeyPress(const FunctionCallbackInfo<v8::Val
   else
     q->addKeyPress( (Qt::Key)args[0]->IntegerValue() );
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QTestEventListWrap::Simulate(const FunctionCallbackInfo<v8::Value>& args) {
@@ -112,5 +112,5 @@ Handle<Value> QTestEventListWrap::Simulate(const FunctionCallbackInfo<v8::Value>
 
   q->simulate(widget);
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }

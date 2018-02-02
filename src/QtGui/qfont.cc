@@ -145,7 +145,7 @@ Handle<Value> QFontWrap::NewInstance(QFont q) {
   QFontWrap* w = node::ObjectWrap::Unwrap<QFontWrap>(instance);
   w->SetWrapped(q);
 
-  return scope.Close(instance);
+  args.GetReturnValue().Set(instance);
 }
 
 Handle<Value> QFontWrap::SetFamily(const FunctionCallbackInfo<v8::Value>& args) {
@@ -156,7 +156,7 @@ Handle<Value> QFontWrap::SetFamily(const FunctionCallbackInfo<v8::Value>& args) 
 
   q->setFamily(qt_v8::ToQString(args[0]->ToString()));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QFontWrap::Family(const FunctionCallbackInfo<v8::Value>& args) {
@@ -165,7 +165,7 @@ Handle<Value> QFontWrap::Family(const FunctionCallbackInfo<v8::Value>& args) {
   QFontWrap* w = ObjectWrap::Unwrap<QFontWrap>(args.This());
   QFont* q = w->GetWrapped();
 
-  return scope.Close(qt_v8::FromQString(q->family()));
+  args.GetReturnValue().Set(qt_v8::FromQString(q->family()));
 }
 
 Handle<Value> QFontWrap::SetPixelSize(const FunctionCallbackInfo<v8::Value>& args) {
@@ -176,7 +176,7 @@ Handle<Value> QFontWrap::SetPixelSize(const FunctionCallbackInfo<v8::Value>& arg
 
   q->setPixelSize(args[0]->IntegerValue());
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QFontWrap::PixelSize(const FunctionCallbackInfo<v8::Value>& args) {
@@ -185,7 +185,7 @@ Handle<Value> QFontWrap::PixelSize(const FunctionCallbackInfo<v8::Value>& args) 
   QFontWrap* w = ObjectWrap::Unwrap<QFontWrap>(args.This());
   QFont* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->pixelSize()));
+  args.GetReturnValue().Set(Number::New(q->pixelSize()));
 }
 
 Handle<Value> QFontWrap::SetPointSize(const FunctionCallbackInfo<v8::Value>& args) {
@@ -196,7 +196,7 @@ Handle<Value> QFontWrap::SetPointSize(const FunctionCallbackInfo<v8::Value>& arg
 
   q->setPointSize(args[0]->IntegerValue());
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QFontWrap::PointSize(const FunctionCallbackInfo<v8::Value>& args) {
@@ -205,7 +205,7 @@ Handle<Value> QFontWrap::PointSize(const FunctionCallbackInfo<v8::Value>& args) 
   QFontWrap* w = ObjectWrap::Unwrap<QFontWrap>(args.This());
   QFont* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->pointSize()));
+  args.GetReturnValue().Set(Number::New(q->pointSize()));
 }
 
 Handle<Value> QFontWrap::SetPointSizeF(const FunctionCallbackInfo<v8::Value>& args) {
@@ -216,7 +216,7 @@ Handle<Value> QFontWrap::SetPointSizeF(const FunctionCallbackInfo<v8::Value>& ar
 
   q->setPointSizeF(args[0]->NumberValue());
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QFontWrap::PointSizeF(const FunctionCallbackInfo<v8::Value>& args) {
@@ -225,5 +225,5 @@ Handle<Value> QFontWrap::PointSizeF(const FunctionCallbackInfo<v8::Value>& args)
   QFontWrap* w = ObjectWrap::Unwrap<QFontWrap>(args.This());
   QFont* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->pointSizeF()));
+  args.GetReturnValue().Set(Number::New(q->pointSizeF()));
 }

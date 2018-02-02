@@ -126,18 +126,18 @@ Handle<Value> QPainterWrap::Begin(const FunctionCallbackInfo<v8::Value>& args) {
         args[0]->ToObject());
     QPixmap* pixmap = pixmap_wrap->GetWrapped();
 
-    return scope.Close(Boolean::New( q->begin(pixmap) ));
+    args.GetReturnValue().Set(Boolean::New( q->begin(pixmap) ));
   } else if (constructor_name == "QWidget") {
     // QWidget
     QWidgetWrap* widget_wrap = ObjectWrap::Unwrap<QWidgetWrap>(
         args[0]->ToObject());
     QWidget* widget = widget_wrap->GetWrapped();
 
-    return scope.Close(Boolean::New( q->begin(widget) ));
+    args.GetReturnValue().Set(Boolean::New( q->begin(widget) ));
   }
 
   // Unknown argument type
-  return scope.Close(Boolean::New( false ));
+  args.GetReturnValue().Set(Boolean::New( false ));
 }
 
 Handle<Value> QPainterWrap::End(const FunctionCallbackInfo<v8::Value>& args) {
@@ -146,7 +146,7 @@ Handle<Value> QPainterWrap::End(const FunctionCallbackInfo<v8::Value>& args) {
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
   QPainter* q = w->GetWrapped();
 
-  return scope.Close(Boolean::New( q->end() ));
+  args.GetReturnValue().Set(Boolean::New( q->end() ));
 }
 
 Handle<Value> QPainterWrap::IsActive(const FunctionCallbackInfo<v8::Value>& args) {
@@ -155,7 +155,7 @@ Handle<Value> QPainterWrap::IsActive(const FunctionCallbackInfo<v8::Value>& args
   QPainterWrap* w = ObjectWrap::Unwrap<QPainterWrap>(args.This());
   QPainter* q = w->GetWrapped();
 
-  return scope.Close(Boolean::New( q->isActive() ));
+  args.GetReturnValue().Set(Boolean::New( q->isActive() ));
 }
 
 Handle<Value> QPainterWrap::Save(const FunctionCallbackInfo<v8::Value>& args) {
@@ -166,7 +166,7 @@ Handle<Value> QPainterWrap::Save(const FunctionCallbackInfo<v8::Value>& args) {
 
   q->save();
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QPainterWrap::Restore(const FunctionCallbackInfo<v8::Value>& args) {
@@ -177,7 +177,7 @@ Handle<Value> QPainterWrap::Restore(const FunctionCallbackInfo<v8::Value>& args)
 
   q->restore();
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 // Supported implementations:
@@ -205,7 +205,7 @@ Handle<Value> QPainterWrap::SetPen(const FunctionCallbackInfo<v8::Value>& args) 
 
   q->setPen(*pen);
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QPainterWrap::SetFont(const FunctionCallbackInfo<v8::Value>& args) {
@@ -231,7 +231,7 @@ Handle<Value> QPainterWrap::SetFont(const FunctionCallbackInfo<v8::Value>& args)
 
   q->setFont(*font);
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 // This seems to be undocumented in Qt, but it exists!
@@ -258,7 +258,7 @@ Handle<Value> QPainterWrap::SetMatrix(const FunctionCallbackInfo<v8::Value>& arg
 
   q->setMatrix(*matrix, args[1]->BooleanValue());
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 // Supported versions:
@@ -273,7 +273,7 @@ Handle<Value> QPainterWrap::FillRect(const FunctionCallbackInfo<v8::Value>& args
 
   if (!args[0]->IsNumber() || !args[1]->IsNumber() || !args[2]->IsNumber() ||
       !args[3]->IsNumber())
-    return scope.Close(Undefined());
+    args.GetReturnValue().SetUndefined();
       
   QString arg4_constructor;
   if (args[4]->IsObject()) {
@@ -314,7 +314,7 @@ Handle<Value> QPainterWrap::FillRect(const FunctionCallbackInfo<v8::Value>& args
         String::New("QPainterWrap:fillRect: bad arguments")));
   }
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 // Supported versions:
@@ -332,7 +332,7 @@ Handle<Value> QPainterWrap::DrawText(const FunctionCallbackInfo<v8::Value>& args
   q->drawText(args[0]->IntegerValue(), args[1]->IntegerValue(), 
       qt_v8::ToQString(args[2]->ToString()));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 // Supported versions:
@@ -366,7 +366,7 @@ Handle<Value> QPainterWrap::DrawPixmap(const FunctionCallbackInfo<v8::Value>& ar
 
   q->drawPixmap(args[0]->IntegerValue(), args[1]->IntegerValue(), *pixmap);
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 // Supported versions:
@@ -400,7 +400,7 @@ Handle<Value> QPainterWrap::DrawImage(const FunctionCallbackInfo<v8::Value>& arg
 
   q->drawImage(args[0]->IntegerValue(), args[1]->IntegerValue(), *image);
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 // Supported versions:
@@ -445,5 +445,5 @@ Handle<Value> QPainterWrap::StrokePath(const FunctionCallbackInfo<v8::Value>& ar
 
   q->strokePath(*path, *pen);
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }

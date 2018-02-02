@@ -77,7 +77,7 @@ Handle<Value> __Template__Wrap::NewInstance(__Template__ q) {
   __Template__Wrap* w = node::ObjectWrap::Unwrap<__Template__Wrap>(instance);
   w->SetWrapped(q);
 
-  return scope.Close(instance);
+  args.GetReturnValue().Set(instance);
 }
 
 Handle<Value> __Template__Wrap::Example(const FunctionCallbackInfo<v8::Value>& args) {
@@ -88,5 +88,5 @@ Handle<Value> __Template__Wrap::Example(const FunctionCallbackInfo<v8::Value>& a
 
   // q->...?
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }

@@ -83,7 +83,7 @@ Handle<Value> QPixmapWrap::NewInstance(QPixmap q) {
   QPixmapWrap* w = node::ObjectWrap::Unwrap<QPixmapWrap>(instance);
   w->SetWrapped(q);
 
-  return scope.Close(instance);
+  args.GetReturnValue().Set(instance);
 }
 
 Handle<Value> QPixmapWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
@@ -92,7 +92,7 @@ Handle<Value> QPixmapWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
   QPixmapWrap* w = ObjectWrap::Unwrap<QPixmapWrap>(args.This());
   QPixmap* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->width()));
+  args.GetReturnValue().Set(Number::New(q->width()));
 }
 
 Handle<Value> QPixmapWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
@@ -101,7 +101,7 @@ Handle<Value> QPixmapWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
   QPixmapWrap* w = ObjectWrap::Unwrap<QPixmapWrap>(args.This());
   QPixmap* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->height()));
+  args.GetReturnValue().Set(Number::New(q->height()));
 }
 
 Handle<Value> QPixmapWrap::Save(const FunctionCallbackInfo<v8::Value>& args) {
@@ -112,7 +112,7 @@ Handle<Value> QPixmapWrap::Save(const FunctionCallbackInfo<v8::Value>& args) {
 
   QString file(qt_v8::ToQString(args[0]->ToString()));
 
-  return scope.Close(Boolean::New( q->save(file) ));
+  args.GetReturnValue().Set(Boolean::New( q->save(file) ));
 }
 
 // Supports:
@@ -135,5 +135,5 @@ Handle<Value> QPixmapWrap::Fill(const FunctionCallbackInfo<v8::Value>& args) {
     q->fill();
   }
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }

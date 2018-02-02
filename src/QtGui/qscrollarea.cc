@@ -145,7 +145,7 @@ Handle<Value> QScrollAreaWrap::Resize(const FunctionCallbackInfo<v8::Value>& arg
 
   q->resize(args[0]->NumberValue(), args[1]->NumberValue());
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QScrollAreaWrap::Show(const FunctionCallbackInfo<v8::Value>& args) {
@@ -156,7 +156,7 @@ Handle<Value> QScrollAreaWrap::Show(const FunctionCallbackInfo<v8::Value>& args)
 
   q->show();
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QScrollAreaWrap::Close(const FunctionCallbackInfo<v8::Value>& args) {
@@ -167,7 +167,7 @@ Handle<Value> QScrollAreaWrap::Close(const FunctionCallbackInfo<v8::Value>& args
 
   q->close();
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QScrollAreaWrap::Size(const FunctionCallbackInfo<v8::Value>& args) {
@@ -176,7 +176,7 @@ Handle<Value> QScrollAreaWrap::Size(const FunctionCallbackInfo<v8::Value>& args)
   QScrollAreaWrap* w = node::ObjectWrap::Unwrap<QScrollAreaWrap>(args.This());
   QScrollArea* q = w->GetWrapped();
 
-  return scope.Close( QSizeWrap::NewInstance(q->size()) );
+  args.GetReturnValue().Set( QSizeWrap::NewInstance(q->size()) );
 }
 
 Handle<Value> QScrollAreaWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
@@ -185,7 +185,7 @@ Handle<Value> QScrollAreaWrap::Width(const FunctionCallbackInfo<v8::Value>& args
   QScrollAreaWrap* w = node::ObjectWrap::Unwrap<QScrollAreaWrap>(args.This());
   QScrollArea* q = w->GetWrapped();
 
-  return scope.Close( Integer::New(q->width()) );
+  args.GetReturnValue().Set( Integer::New(q->width()) );
 }
 
 Handle<Value> QScrollAreaWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
@@ -194,7 +194,7 @@ Handle<Value> QScrollAreaWrap::Height(const FunctionCallbackInfo<v8::Value>& arg
   QScrollAreaWrap* w = node::ObjectWrap::Unwrap<QScrollAreaWrap>(args.This());
   QScrollArea* q = w->GetWrapped();
 
-  return scope.Close( Integer::New(q->height()) );
+  args.GetReturnValue().Set( Integer::New(q->height()) );
 }
 
 Handle<Value> QScrollAreaWrap::ObjectName(const FunctionCallbackInfo<v8::Value>& args) {
@@ -203,7 +203,7 @@ Handle<Value> QScrollAreaWrap::ObjectName(const FunctionCallbackInfo<v8::Value>&
   QScrollAreaWrap* w = node::ObjectWrap::Unwrap<QScrollAreaWrap>(args.This());
   QScrollArea* q = w->GetWrapped();
 
-  return scope.Close(qt_v8::FromQString(q->objectName()));
+  args.GetReturnValue().Set(qt_v8::FromQString(q->objectName()));
 }
 
 Handle<Value> QScrollAreaWrap::SetObjectName(const FunctionCallbackInfo<v8::Value>& args) {
@@ -214,7 +214,7 @@ Handle<Value> QScrollAreaWrap::SetObjectName(const FunctionCallbackInfo<v8::Valu
 
   q->setObjectName(qt_v8::ToQString(args[0]->ToString()));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 //
@@ -229,7 +229,7 @@ Handle<Value> QScrollAreaWrap::Parent(const FunctionCallbackInfo<v8::Value>& arg
   QScrollAreaWrap* w = node::ObjectWrap::Unwrap<QScrollAreaWrap>(args.This());
   QScrollArea* q = w->GetWrapped();
 
-  return scope.Close(qt_v8::FromQString(q->parent()->objectName()));
+  args.GetReturnValue().Set(qt_v8::FromQString(q->parent()->objectName()));
 }
 
 Handle<Value> QScrollAreaWrap::Update(const FunctionCallbackInfo<v8::Value>& args) {
@@ -240,7 +240,7 @@ Handle<Value> QScrollAreaWrap::Update(const FunctionCallbackInfo<v8::Value>& arg
 
   q->update();
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QScrollAreaWrap::SetWidget(const FunctionCallbackInfo<v8::Value>& args) {
@@ -266,7 +266,7 @@ Handle<Value> QScrollAreaWrap::SetWidget(const FunctionCallbackInfo<v8::Value>& 
 
   q->setWidget(widget);
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 // QUIRK:
@@ -279,7 +279,7 @@ Handle<Value> QScrollAreaWrap::Widget(const FunctionCallbackInfo<v8::Value>& arg
 
   int retvalue = q->widget() ? 1 : 0;
 
-  return scope.Close(Integer::New(retvalue));
+  args.GetReturnValue().Set(Integer::New(retvalue));
 }
 
 Handle<Value> QScrollAreaWrap::SetFrameShape(const FunctionCallbackInfo<v8::Value>& args) {
@@ -290,7 +290,7 @@ Handle<Value> QScrollAreaWrap::SetFrameShape(const FunctionCallbackInfo<v8::Valu
 
   q->setFrameShape((QFrame::Shape)(args[0]->IntegerValue()));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QScrollAreaWrap::SetFocusPolicy(const FunctionCallbackInfo<v8::Value>& args) {
@@ -301,7 +301,7 @@ Handle<Value> QScrollAreaWrap::SetFocusPolicy(const FunctionCallbackInfo<v8::Val
 
   q->setFocusPolicy((Qt::FocusPolicy)(args[0]->IntegerValue()));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 // Supported implementations:
@@ -314,7 +314,7 @@ Handle<Value> QScrollAreaWrap::Move(const FunctionCallbackInfo<v8::Value>& args)
 
   q->move(args[0]->IntegerValue(), args[1]->IntegerValue());
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QScrollAreaWrap::X(const FunctionCallbackInfo<v8::Value>& args) {
@@ -323,7 +323,7 @@ Handle<Value> QScrollAreaWrap::X(const FunctionCallbackInfo<v8::Value>& args) {
   QScrollAreaWrap* w = node::ObjectWrap::Unwrap<QScrollAreaWrap>(args.This());
   QScrollArea* q = w->GetWrapped();
 
-  return scope.Close(Integer::New(q->x()));
+  args.GetReturnValue().Set(Integer::New(q->x()));
 }
 
 Handle<Value> QScrollAreaWrap::Y(const FunctionCallbackInfo<v8::Value>& args) {
@@ -332,7 +332,7 @@ Handle<Value> QScrollAreaWrap::Y(const FunctionCallbackInfo<v8::Value>& args) {
   QScrollAreaWrap* w = node::ObjectWrap::Unwrap<QScrollAreaWrap>(args.This());
   QScrollArea* q = w->GetWrapped();
 
-  return scope.Close(Integer::New(q->y()));
+  args.GetReturnValue().Set(Integer::New(q->y()));
 }
 
 Handle<Value> 
@@ -344,7 +344,7 @@ Handle<Value>
 
   q->setVerticalScrollBarPolicy((Qt::ScrollBarPolicy)(args[0]->IntegerValue()));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> 
@@ -357,7 +357,7 @@ Handle<Value>
   q->setHorizontalScrollBarPolicy((Qt::ScrollBarPolicy)
       (args[0]->IntegerValue()));
 
-  return scope.Close(Undefined());
+  args.GetReturnValue().SetUndefined();
 }
 
 Handle<Value> QScrollAreaWrap::HorizontalScrollBar(const FunctionCallbackInfo<v8::Value>& args) {
@@ -366,7 +366,7 @@ Handle<Value> QScrollAreaWrap::HorizontalScrollBar(const FunctionCallbackInfo<v8
   QScrollAreaWrap* w = node::ObjectWrap::Unwrap<QScrollAreaWrap>(args.This());
   QScrollArea* q = w->GetWrapped();
 
-  return scope.Close( 
+  args.GetReturnValue().Set( 
     QScrollBarWrap::NewInstance(q->horizontalScrollBar()) );
 }
 
@@ -376,6 +376,6 @@ Handle<Value> QScrollAreaWrap::VerticalScrollBar(const FunctionCallbackInfo<v8::
   QScrollAreaWrap* w = node::ObjectWrap::Unwrap<QScrollAreaWrap>(args.This());
   QScrollArea* q = w->GetWrapped();
 
-  return scope.Close( 
+  args.GetReturnValue().Set( 
       QScrollBarWrap::NewInstance(q->verticalScrollBar()) );
 }

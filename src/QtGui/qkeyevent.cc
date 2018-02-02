@@ -78,7 +78,7 @@ Handle<Value> QKeyEventWrap::NewInstance(QKeyEvent q) {
   QKeyEventWrap* w = node::ObjectWrap::Unwrap<QKeyEventWrap>(instance);
   w->SetWrapped(q);
 
-  return scope.Close(instance);
+  args.GetReturnValue().Set(instance);
 }
 
 Handle<Value> QKeyEventWrap::Key(const FunctionCallbackInfo<v8::Value>& args) {
@@ -87,7 +87,7 @@ Handle<Value> QKeyEventWrap::Key(const FunctionCallbackInfo<v8::Value>& args) {
   QKeyEventWrap* w = node::ObjectWrap::Unwrap<QKeyEventWrap>(args.This());
   QKeyEvent* q = w->GetWrapped();
 
-  return scope.Close(Number::New(q->key()));
+  args.GetReturnValue().Set(Number::New(q->key()));
 }
 
 Handle<Value> QKeyEventWrap::Text(const FunctionCallbackInfo<v8::Value>& args) {
@@ -96,5 +96,5 @@ Handle<Value> QKeyEventWrap::Text(const FunctionCallbackInfo<v8::Value>& args) {
   QKeyEventWrap* w = node::ObjectWrap::Unwrap<QKeyEventWrap>(args.This());
   QKeyEvent* q = w->GetWrapped();
 
-  return scope.Close(qt_v8::FromQString(q->text()));
+  args.GetReturnValue().Set(qt_v8::FromQString(q->text()));
 }
