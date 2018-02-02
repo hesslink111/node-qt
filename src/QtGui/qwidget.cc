@@ -64,8 +64,9 @@ QWidgetImpl::~QWidgetImpl() {
 }
 
 void QWidgetImpl::paintEvent(QPaintEvent* e) {
+  Isolate *isolate = Isolate::GetCurrent();
   if (!paintEventCallback_.IsEmpty()
-      || !paintEventCallback_.Get()->IsFunction())
+      || !paintEventCallback_.Get(isolate)->IsFunction())
     return;
 
   const unsigned argc = 0;
