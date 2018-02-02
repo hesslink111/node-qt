@@ -40,7 +40,7 @@ inline QString ToQString(v8::Local<v8::String> str) {
 }
 
 inline v8::Local<v8::String> FromQString(QString str) {
-  return v8::String::New( str.utf16() );
+  return v8::String::NewFromTwoByte( str.utf16() );
 }
 
 } // namespace
