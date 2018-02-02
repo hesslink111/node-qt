@@ -64,7 +64,7 @@ void QImageWrap::Initialize(Handle<Object> target) {
 
   // Prototype
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "isNull"),
-      FunctionTemplate::New(IsNull)->GetFunction());
+      FunctionTemplate::New(isolate, IsNull)->GetFunction());
 
   constructor.Reset(isolate, tpl->GetFunction());
   target->Set(String::NewFromUtf8(isolate, "QImage"), tpl->GetFunction());
