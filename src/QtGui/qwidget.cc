@@ -66,7 +66,7 @@ QWidgetImpl::~QWidgetImpl() {
 void QWidgetImpl::paintEvent(QPaintEvent* e) {
   Isolate *isolate = Isolate::GetCurrent();
 
-  if (!paintEventCallback_.IsEmpty()
+  if (paintEventCallback_.IsEmpty()
       || !paintEventCallback_.Get(isolate)->IsFunction())
     return;
 
@@ -79,77 +79,92 @@ void QWidgetImpl::paintEvent(QPaintEvent* e) {
 
 void QWidgetImpl::mousePressEvent(QMouseEvent* e) {
   e->ignore(); // ensures event bubbles up
+
+  Isolate *isolate = Isolate::GetCurrent();
   
-  if (!mousePressCallback_->IsFunction())
+  if (mousePressCallback_.IsEmpty()
+      || !mousePressCallback_.Get(isolate)->IsFunction())
     return;
 
   const unsigned argc = 1;
   Handle<Value> argv[argc] = {
     QMouseEventWrap::NewInstance(*e)
   };
-  Handle<Function> cb = Persistent<Function>::Cast(mousePressCallback_);
+  Local<Function> cb = Local<Function>::Cast(mousePressCallback_.Get(isolate));
     
-  cb->Call(Context::GetCurrent()->Global(), argc, argv);
+  cb->Call(Null(isolate), argc, argv);
 }
 
 void QWidgetImpl::mouseReleaseEvent(QMouseEvent* e) {
   e->ignore(); // ensures event bubbles up
+
+  Isolate *isolate = Isolate::GetCurrent();
   
-  if (!mouseReleaseCallback_->IsFunction())
+  if (mouseReleaseCallback_.IsEmpty()
+      || !mouseReleaseCallback_.Get(isolate)->IsFunction())
     return;
 
   const unsigned argc = 1;
   Handle<Value> argv[argc] = {
     QMouseEventWrap::NewInstance(*e)
   };
-  Handle<Function> cb = Persistent<Function>::Cast(mouseReleaseCallback_);
+  Local<Function> cb = Local<Function>::Cast(mouseReleaseCallback_.Get(isolate));
     
-  cb->Call(Context::GetCurrent()->Global(), argc, argv);
+  cb->Call(Null(isolate), argc, argv);
 }
 
 void QWidgetImpl::mouseMoveEvent(QMouseEvent* e) {
   e->ignore(); // ensures event bubbles up
+
+  Isolate *isolate = Isolate::GetCurrent();
   
-  if (!mouseMoveCallback_->IsFunction())
+  if (mouseMoveCallback.IsEmpty()
+      || !mouseMoveCallback_.Get(isolate)->IsFunction())
     return;
 
   const unsigned argc = 1;
   Handle<Value> argv[argc] = {
     QMouseEventWrap::NewInstance(*e)
   };
-  Handle<Function> cb = Persistent<Function>::Cast(mouseMoveCallback_);
+  Local<Function> cb = Local<Function>::Cast(mouseMoveCallback_.Get(isolate));
     
-  cb->Call(Context::GetCurrent()->Global(), argc, argv);
+  cb->Call(Null(isolate), argc, argv);
 }
 
 void QWidgetImpl::keyPressEvent(QKeyEvent* e) {
   e->ignore(); // ensures event bubbles up
+
+  Isolate *isolate = Isolate::GetCurrent();
   
-  if (!keyPressCallback_->IsFunction())
+  if (keyPressCallback.IsEmpty()
+      || !keyPressCallback_.Get(isolate)->IsFunction())
     return;
 
   const unsigned argc = 1;
   Handle<Value> argv[argc] = {
     QKeyEventWrap::NewInstance(*e)
   };
-  Handle<Function> cb = Persistent<Function>::Cast(keyPressCallback_);
+  Local<Function> cb = Local<Function>::Cast(keyPressCallback_.Get(isolate));
     
-  cb->Call(Context::GetCurrent()->Global(), argc, argv);
+  cb->Call(Null(isolate), argc, argv);
 }
 
 void QWidgetImpl::keyReleaseEvent(QKeyEvent* e) {
   e->ignore(); // ensures event bubbles up
   
-  if (!keyReleaseCallback_->IsFunction())
+  Isolate *isolate = Isolate::GetCurrent();
+
+  if (keyReleaseCallback_.IsEmpty()
+      || !keyReleaseCallback_.Get(isolate)->IsFunction())
     return;
 
   const unsigned argc = 1;
   Handle<Value> argv[argc] = {
     QKeyEventWrap::NewInstance(*e)
   };
-  Handle<Function> cb = Persistent<Function>::Cast(keyReleaseCallback_);
+  Local<Function> cb = Local<Function>::Cast(keyReleaseCallback_.Get(isolate));
     
-  cb->Call(Context::GetCurrent()->Global(), argc, argv);
+  cb->Call(Null(isolate), argc, argv);
 }
 
 //
