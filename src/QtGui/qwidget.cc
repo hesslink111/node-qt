@@ -46,12 +46,12 @@ Persistent<Function> QWidgetWrap::constructor;
 QWidgetImpl::QWidgetImpl(QWidgetImpl* parent) : QWidget(parent) {
   // Initialize callbacks as boolean values so we can test if the callback
   // has been set via ->IsFunction() below
-  paintEventCallback_ = Persistent<Boolean>::New(Boolean::New(false));
-  mousePressCallback_ = Persistent<Boolean>::New(Boolean::New(false));
-  mouseReleaseCallback_ = Persistent<Boolean>::New(Boolean::New(false));
-  mouseMoveCallback_ = Persistent<Boolean>::New(Boolean::New(false));
-  keyPressCallback_ = Persistent<Boolean>::New(Boolean::New(false));
-  keyReleaseCallback_ = Persistent<Boolean>::New(Boolean::New(false));
+  paintEventCallback_.Reset();
+  mousePressCallback_.Reset();
+  mouseReleaseCallback_.Reset();
+  mouseMoveCallback_.Reset();
+  keyPressCallback_.Reset();
+  keyReleaseCallback_.Reset();
 }
 
 QWidgetImpl::~QWidgetImpl() {
@@ -175,7 +175,7 @@ QWidgetWrap::~QWidgetWrap() {
 
 void QWidgetWrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
-  
+
   // Prepare constructor template
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QWidget"));
