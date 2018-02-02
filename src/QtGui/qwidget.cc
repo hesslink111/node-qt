@@ -55,12 +55,12 @@ QWidgetImpl::QWidgetImpl(QWidgetImpl* parent) : QWidget(parent) {
 }
 
 QWidgetImpl::~QWidgetImpl() {
-  paintEventCallback_.Dispose();
-  mousePressCallback_.Dispose();
-  mouseReleaseCallback_.Dispose();
-  mouseMoveCallback_.Dispose();
-  keyPressCallback_.Dispose();
-  keyReleaseCallback_.Dispose();
+  paintEventCallback_.Empty();
+  mousePressCallback_.Empty();
+  mouseReleaseCallback_.Empty();
+  mouseMoveCallback_.Empty();
+  keyPressCallback_.Empty();
+  keyReleaseCallback_.Empty();
 }
 
 void QWidgetImpl::paintEvent(QPaintEvent* e) {
