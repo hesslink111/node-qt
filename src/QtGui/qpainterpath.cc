@@ -51,37 +51,35 @@ void QPainterPathWrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QPainterPath"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "moveTo"),
-      FunctionTemplate::New(MoveTo)->GetFunction());
+      FunctionTemplate::New(isolate, MoveTo)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "lineTo"),
-      FunctionTemplate::New(LineTo)->GetFunction());
+      FunctionTemplate::New(isolate, LineTo)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "currentPosition"),
-      FunctionTemplate::New(CurrentPosition)->GetFunction());
+      FunctionTemplate::New(isolate, CurrentPosition)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "closeSubpath"),
-      FunctionTemplate::New(CloseSubpath)->GetFunction());
+      FunctionTemplate::New(isolate, CloseSubpath)->GetFunction());
 
-  constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewFromUtf8(isolate, "QPainterPath"), constructor);
+  constructor.Reset(isolate, tpl->GetFunction());
+  target->Set(String::NewFromUtf8(isolate, "QPainterPath"), tpl->GetFunction());
 }
 
-Handle<Value> QPainterPathWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QPainterPathWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QPainterPathWrap* w = new QPainterPathWrap(args);
   w->Wrap(args.This());
 
-  return args.This();
+  args.GetReturnValue().Set(args.This());
 }
 
 // Supported versions:
 //   moveTo( QPointF() )
-Handle<Value> QPainterPathWrap::MoveTo(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QPainterPathWrap::MoveTo(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QPainterPathWrap* w = ObjectWrap::Unwrap<QPainterPathWrap>(args.This());
   QPainterPath* q = w->GetWrapped();
@@ -93,8 +91,8 @@ Handle<Value> QPainterPathWrap::MoveTo(const FunctionCallbackInfo<v8::Value>& ar
   }
   
   if (arg0_constructor != "QPointF")
-    return ThrowException(Exception::TypeError(
-      String::New("QPainterPathWrap::MoveTo: argument not recognized")));
+    isolate->ThrowException(Exception::TypeError(
+      String::NewFromUtf8(isolate, "QPainterPathWrap::MoveTo: argument not recognized")));
 
   // moveTo( QPointF point )
   QPointFWrap* pointf_wrap = ObjectWrap::Unwrap<QPointFWrap>(
@@ -106,19 +104,19 @@ Handle<Value> QPainterPathWrap::MoveTo(const FunctionCallbackInfo<v8::Value>& ar
   args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QPainterPathWrap::CurrentPosition(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QPainterPathWrap::CurrentPosition(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QPainterPathWrap* w = ObjectWrap::Unwrap<QPainterPathWrap>(args.This());
   QPainterPath* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(QPointFWrap::NewInstance(q->currentPosition()));
+  args.GetReturnValue().Set(QPointFWrap::NewInstance(isolate, q->currentPosition()));
 }
 
 // Supported versions:
 //   lineTo( QPointF() )
-Handle<Value> QPainterPathWrap::LineTo(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QPainterPathWrap::LineTo(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QPainterPathWrap* w = ObjectWrap::Unwrap<QPainterPathWrap>(args.This());
   QPainterPath* q = w->GetWrapped();
@@ -130,8 +128,8 @@ Handle<Value> QPainterPathWrap::LineTo(const FunctionCallbackInfo<v8::Value>& ar
   }
   
   if (arg0_constructor != "QPointF")
-    return ThrowException(Exception::TypeError(
-      String::New("QPainterPathWrap::MoveTo: argument not recognized")));
+    isolate->ThrowException(Exception::TypeError(
+      String::NewFromUtf8(isolate, "QPainterPathWrap::MoveTo: argument not recognized")));
 
   // lineTo( QPointF point )
   QPointFWrap* pointf_wrap = ObjectWrap::Unwrap<QPointFWrap>(
@@ -143,9 +141,7 @@ Handle<Value> QPainterPathWrap::LineTo(const FunctionCallbackInfo<v8::Value>& ar
   args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QPainterPathWrap::CloseSubpath(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QPainterPathWrap::CloseSubpath(const FunctionCallbackInfo<v8::Value>& args) {
   QPainterPathWrap* w = ObjectWrap::Unwrap<QPainterPathWrap>(args.This());
   QPainterPath* q = w->GetWrapped();
 

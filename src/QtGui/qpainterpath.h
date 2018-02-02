@@ -44,13 +44,13 @@ class QPainterPathWrap : public node::ObjectWrap {
   QPainterPathWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QPainterPathWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> MoveTo(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> CurrentPosition(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> LineTo(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> CloseSubpath(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void MoveTo(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void CurrentPosition(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void LineTo(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void CloseSubpath(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QPainterPath* q_;
