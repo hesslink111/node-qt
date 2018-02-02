@@ -63,7 +63,7 @@ void QMouseEventWrap::Initialize(Handle<Object> target) {
   target->Set(String::NewFromUtf8(isolate, "QMouseEvent"), constructor);
 }
 
-Handle<Value> QMouseEventWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
+void QMouseEventWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   HandleScope scope;
 
   QMouseEventWrap* w = new QMouseEventWrap();
@@ -72,39 +72,38 @@ Handle<Value> QMouseEventWrap::New(const FunctionCallbackInfo<v8::Value>& args) 
   return args.This();
 }
 
-Handle<Value> QMouseEventWrap::NewInstance(QMouseEvent q) {
-  HandleScope scope;
-  
-  Local<Object> instance = constructor->NewInstance(0, NULL);
+void QMouseEventWrap::NewInstance(Isolate *isolate, QMouseEvent q) {
+  Local<Function> cons = Local<Function>::New(isolate, constructor);
+  Local<Object> instance = const->NewInstance(isolate, 0, NULL).ToLocalChecked();
   QMouseEventWrap* w = node::ObjectWrap::Unwrap<QMouseEventWrap>(instance);
   w->SetWrapped(q);
 
-  args.GetReturnValue().Set(instance);
+  return instance;
 }
 
-Handle<Value> QMouseEventWrap::X(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QMouseEventWrap::X(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QMouseEventWrap* w = node::ObjectWrap::Unwrap<QMouseEventWrap>(args.This());
   QMouseEvent* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->x()));
+  args.GetReturnValue().Set(Number::New(isolate, q->x()));
 }
 
-Handle<Value> QMouseEventWrap::Y(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QMouseEventWrap::Y(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QMouseEventWrap* w = node::ObjectWrap::Unwrap<QMouseEventWrap>(args.This());
   QMouseEvent* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->y()));
+  args.GetReturnValue().Set(Number::New(isolate, q->y()));
 }
 
-Handle<Value> QMouseEventWrap::Button(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QMouseEventWrap::Button(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QMouseEventWrap* w = node::ObjectWrap::Unwrap<QMouseEventWrap>(args.This());
   QMouseEvent* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->button()));
+  args.GetReturnValue().Set(Number::New(isolate, q->button()));
 }

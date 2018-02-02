@@ -68,9 +68,7 @@ void QSizeWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   args.GetReturnValue().Set(args.This());
 }
 
-Local<Value> QSizeWrap::NewInstance(const FunctionCallbackInfo<v8::Value>& args, QSize q) {
-  Isolate *isolate = args.GetIsolate();
-  
+Local<Value> QSizeWrap::NewInstance(Isolate *isolate, QSize q) {  
   Local<Function> cons = Local<Function>::New(isolate, constructor);
   Local<Object> instance = cons->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
   QSizeWrap* w = node::ObjectWrap::Unwrap<QSizeWrap>(instance);

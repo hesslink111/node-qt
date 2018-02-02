@@ -38,7 +38,7 @@
 class QMouseEventWrap : public node::ObjectWrap {
  public:
   static void Initialize(v8::Handle<v8::Object> target);
-  static v8::Handle<v8::Value> NewInstance(QMouseEvent q);
+  static v8::Local<v8::Value> NewInstance(v8::Isolate *isolate, QMouseEvent q);
   QMouseEvent* GetWrapped() const { return q_; };
   void SetWrapped(QMouseEvent q) { 
     if (q_) delete q_; 
@@ -49,12 +49,12 @@ class QMouseEventWrap : public node::ObjectWrap {
   QMouseEventWrap();
   ~QMouseEventWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> X(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Y(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Button(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void X(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Y(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Button(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QMouseEvent* q_;
