@@ -41,6 +41,8 @@ Persistent<Function> QMatrixWrap::constructor;
 //   QMatrix ( qreal m11, qreal m12, qreal m21, qreal m22, qreal dx, qreal dy )
 //   QMatrix ( QMatrix matrix )
 QMatrixWrap::QMatrixWrap(const FunctionCallbackInfo<v8::Value>& args) : q_(NULL) {
+  Isolate *isolate = args.GetIsolate();
+
   if (args.Length() == 0) {
     // QMatrix ( )
 
@@ -52,8 +54,8 @@ QMatrixWrap::QMatrixWrap(const FunctionCallbackInfo<v8::Value>& args) : q_(NULL)
         qt_v8::ToQString(args[0]->ToObject()->GetConstructorName());
 
     if (arg0_constructor != "QMatrix")
-      ThrowException(Exception::TypeError(
-        String::New("QMatrix::QMatrix: bad argument")));
+      isolate->ThrowException(Exception::TypeError(
+        String::NewFromUtf8(isolate, "QMatrix::QMatrix: bad argument")));
 
     // Unwrap obj
     QMatrixWrap* q_wrap = ObjectWrap::Unwrap<QMatrixWrap>(
@@ -78,108 +80,103 @@ void QMatrixWrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QMatrix"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "m11"),
-      FunctionTemplate::New(M11)->GetFunction());
+      FunctionTemplate::New(isolate, M11)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "m12"),
-      FunctionTemplate::New(M12)->GetFunction());
+      FunctionTemplate::New(isolate, M12)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "m21"),
-      FunctionTemplate::New(M21)->GetFunction());
+      FunctionTemplate::New(isolate, M21)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "m22"),
-      FunctionTemplate::New(M22)->GetFunction());
+      FunctionTemplate::New(isolate, M22)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "dx"),
-      FunctionTemplate::New(Dx)->GetFunction());
+      FunctionTemplate::New(isolate, Dx)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "dy"),
-      FunctionTemplate::New(Dy)->GetFunction());
+      FunctionTemplate::New(isolate, Dy)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "translate"),
-      FunctionTemplate::New(Translate)->GetFunction());
+      FunctionTemplate::New(isolate, Translate)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "scale"),
-      FunctionTemplate::New(Scale)->GetFunction());
+      FunctionTemplate::New(isolate, Scale)->GetFunction());
 
-  constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewFromUtf8(isolate, "QMatrix"), constructor);
+  constructor.Reset(isolate, tpl->GetFunction());
+  target->Set(String::NewFromUtf8(isolate, "QMatrix"), tpl->GetFunction());
 }
 
-Handle<Value> QMatrixWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QMatrixWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QMatrixWrap* w = new QMatrixWrap(args);
   w->Wrap(args.This());
 
-  return args.This();
+  args.GetReturnValue().Set(args.This());
 }
 
-Handle<Value> QMatrixWrap::NewInstance(QMatrix q) {
-  HandleScope scope;
-  
-  Local<Object> instance = constructor->NewInstance(0, NULL);
+Local<Value> QMatrixWrap::NewInstance(Isolate *isolate, QMatrix q) {
+  Local<Function> cons = Local<Function>::New(isolate, constructor);
+  Local<Object> instance = cons->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
   QMatrixWrap* w = node::ObjectWrap::Unwrap<QMatrixWrap>(instance);
   w->SetWrapped(q);
 
   args.GetReturnValue().Set(instance);
 }
 
-Handle<Value> QMatrixWrap::M11(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QMatrixWrap::M11(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
   QMatrix* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->m11()));
+  args.GetReturnValue().Set(Number::New(isolate, q->m11()));
 }
 
-Handle<Value> QMatrixWrap::M12(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QMatrixWrap::M12(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
   QMatrix* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->m12()));
+  args.GetReturnValue().Set(Number::New(isolate, q->m12()));
 }
 
-Handle<Value> QMatrixWrap::M21(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QMatrixWrap::M21(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
   QMatrix* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->m21()));
+  args.GetReturnValue().Set(Number::New(isolate, q->m21()));
 }
 
-Handle<Value> QMatrixWrap::M22(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QMatrixWrap::M22(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
   QMatrix* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->m22()));
+  args.GetReturnValue().Set(Number::New(isolate, q->m22()));
 }
 
-Handle<Value> QMatrixWrap::Dx(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QMatrixWrap::Dx(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
   QMatrix* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->dx()));
+  args.GetReturnValue().Set(Number::New(isolate, q->dx()));
 }
 
-Handle<Value> QMatrixWrap::Dy(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QMatrixWrap::Dy(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
   QMatrix* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->dy()));
+  args.GetReturnValue().Set(Number::New(isolate, q->dy()));
 }
 
-Handle<Value> QMatrixWrap::Translate(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QMatrixWrap::Translate(const FunctionCallbackInfo<v8::Value>& args) {
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
   QMatrix* q = w->GetWrapped();
 
@@ -188,9 +185,7 @@ Handle<Value> QMatrixWrap::Translate(const FunctionCallbackInfo<v8::Value>& args
   args.GetReturnValue().Set(args.This());
 }
 
-Handle<Value> QMatrixWrap::Scale(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QMatrixWrap::Scale(const FunctionCallbackInfo<v8::Value>& args) {
   QMatrixWrap* w = ObjectWrap::Unwrap<QMatrixWrap>(args.This());
   QMatrix* q = w->GetWrapped();
 
