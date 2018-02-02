@@ -81,6 +81,7 @@ Local<Value> QScrollBarWrap::NewInstance(Isolate *isolate, QScrollBar *q) {
 void QScrollBarWrap::Value(const FunctionCallbackInfo<v8::Value>& args) {
   Isolate *isolate = args.GetIsolate();
 
+  assert(args.This()->InternalFieldCount() > 0);
   QScrollBarWrap* w = ObjectWrap::Unwrap<QScrollBarWrap>(args.This());
   QScrollBar* q = w->GetWrapped();
 
@@ -88,6 +89,7 @@ void QScrollBarWrap::Value(const FunctionCallbackInfo<v8::Value>& args) {
 }
 
 void QScrollBarWrap::SetValue(const FunctionCallbackInfo<v8::Value>& args) {
+  assert(args.This()->InternalFieldCount() > 0);
   QScrollBarWrap* w = ObjectWrap::Unwrap<QScrollBarWrap>(args.This());
   QScrollBar* q = w->GetWrapped();
 
