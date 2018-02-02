@@ -116,6 +116,7 @@ void QMatrixWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
 Local<Value> QMatrixWrap::NewInstance(Isolate *isolate, QMatrix q) {
   Local<Function> cons = Local<Function>::New(isolate, constructor);
   Local<Object> instance = cons->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
+  assert(instance->InternalFieldCount() > 0);
   QMatrixWrap* w = node::ObjectWrap::Unwrap<QMatrixWrap>(instance);
   w->SetWrapped(q);
 
