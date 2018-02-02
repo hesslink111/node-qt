@@ -357,7 +357,7 @@ void QPainterWrap::DrawPixmap(const FunctionCallbackInfo<v8::Value>& args) {
 
   if (pixmap->isNull()) {
     isolate->ThrowException(Exception::TypeError(
-      String::NewUtf8(isolate, "QPainterWrap::DrawPixmap: pixmap is null, no size set?")));
+      String::NewFromUtf8(isolate, "QPainterWrap::DrawPixmap: pixmap is null, no size set?")));
   }
 
   q->drawPixmap(args[0]->IntegerValue(), args[1]->IntegerValue(), *pixmap);
