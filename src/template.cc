@@ -49,40 +49,35 @@ void __Template__Wrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "__Template__"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "example"),
-      FunctionTemplate::New(Example)->GetFunction());
+      FunctionTemplate::New(isolate, Example)->GetFunction());
 
-  constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewFromUtf8(isolate, "__Template__"), constructor);
+  constructor.Reset(isolate, tpl->GetFunction());
+  target->Set(String::NewFromUtf8(isolate, "__Template__"), tpl->GetFunction());
 }
 
-Handle<Value> __Template__Wrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void __Template__Wrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   __Template__Wrap* w = new __Template__Wrap(args);
   w->Wrap(args.This());
 
-  return args.This();
+  args.GetReturnValue().Set(args.This());
 }
 
-Handle<Value> __Template__Wrap::NewInstance(__Template__ q) {
-  HandleScope scope;
-  
-  Local<Object> instance = constructor->NewInstance(0, NULL);
+Local<Value> __Template__Wrap::NewInstance(__Template__ q) {
+  Local<Function> cons = Local<Function>::New(isolate, constructor);
+  Local<Object> instance = constructor->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
   __Template__Wrap* w = node::ObjectWrap::Unwrap<__Template__Wrap>(instance);
   w->SetWrapped(q);
 
-  args.GetReturnValue().Set(instance);
+  return instance;
 }
 
-Handle<Value> __Template__Wrap::Example(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void __Template__Wrap::Example(const FunctionCallbackInfo<v8::Value>& args) {
   __Template__Wrap* w = ObjectWrap::Unwrap<__Template__Wrap>(args.This());
   __Template__* q = w->GetWrapped();
 

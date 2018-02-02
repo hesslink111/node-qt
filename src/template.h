@@ -43,16 +43,16 @@ class __Template__Wrap : public node::ObjectWrap {
     if (q_) delete q_; 
     q_ = new __Template__(q); 
   };
-  static v8::Handle<v8::Value> NewInstance(__Template__ q);
+  static Local<Value> NewInstance(v8::Isolate *isolate, __Template__ q);
 
  private:
   __Template__Wrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~__Template__Wrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> Example(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Example(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   __Template__* q_;

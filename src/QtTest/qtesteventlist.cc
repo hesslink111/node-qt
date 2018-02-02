@@ -49,35 +49,30 @@ void QTestEventListWrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QTestEventList"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "addMouseClick"),
-      FunctionTemplate::New(AddMouseClick)->GetFunction());
+      FunctionTemplate::New(isolate, AddMouseClick)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "addKeyPress"),
-      FunctionTemplate::New(AddKeyPress)->GetFunction());
+      FunctionTemplate::New(isolate, AddKeyPress)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "simulate"),
-      FunctionTemplate::New(Simulate)->GetFunction());
+      FunctionTemplate::New(isolate, Simulate)->GetFunction());
 
-  constructor = Persistent<Function>::New(
-      tpl->GetFunction());
-  target->Set(String::NewFromUtf8(isolate, "QTestEventList"), constructor);
+  constructor.Reset(isolate, tpl->GetFunction());
+  target->Set(String::NewFromUtf8(isolate, "QTestEventList"), tpl->GetFunction());
 }
 
-Handle<Value> QTestEventListWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QTestEventListWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QTestEventListWrap* w = new QTestEventListWrap();
   w->Wrap(args.This());
 
-  return args.This();
+  args.GetReturnValue().Set(args.This());
 }
 
-Handle<Value> QTestEventListWrap::AddMouseClick(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QTestEventListWrap::AddMouseClick(const FunctionCallbackInfo<v8::Value>& args) {
   QTestEventListWrap* w = ObjectWrap::Unwrap<QTestEventListWrap>(args.This());
   QTestEventList* q = w->GetWrapped();
 
@@ -86,9 +81,7 @@ Handle<Value> QTestEventListWrap::AddMouseClick(const FunctionCallbackInfo<v8::V
   args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QTestEventListWrap::AddKeyPress(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QTestEventListWrap::AddKeyPress(const FunctionCallbackInfo<v8::Value>& args) {
   QTestEventListWrap* w = ObjectWrap::Unwrap<QTestEventListWrap>(args.This());
   QTestEventList* q = w->GetWrapped();
 
@@ -100,9 +93,7 @@ Handle<Value> QTestEventListWrap::AddKeyPress(const FunctionCallbackInfo<v8::Val
   args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QTestEventListWrap::Simulate(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QTestEventListWrap::Simulate(const FunctionCallbackInfo<v8::Value>& args) {
   QTestEventListWrap* w = ObjectWrap::Unwrap<QTestEventListWrap>(args.This());
   QTestEventList* q = w->GetWrapped();
 
