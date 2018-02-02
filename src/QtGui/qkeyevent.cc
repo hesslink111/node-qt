@@ -54,43 +54,41 @@ void QKeyEventWrap::Initialize(Handle<Object> target) {
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "key"),
-      FunctionTemplate::New(Key)->GetFunction());
+      FunctionTemplate::New(isolate, Key)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "text"),
-      FunctionTemplate::New(Text)->GetFunction());
+      FunctionTemplate::New(isolate, Text)->GetFunction());
 
-  constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewFromUtf8(isolate, "QKeyEvent"), constructor);
+  constructor.Reset(isolate, tpl->GetFunction());
+  target->Set(String::NewFromUtf8(isolate, "QKeyEvent"), tpl->GetFunction());
 }
 
-Handle<Value> QKeyEventWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QKeyEventWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QKeyEventWrap* w = new QKeyEventWrap;
   w->Wrap(args.This());
 
-  return args.This();
+  args.GetReturnValue().Set(args.This());
 }
 
 Local<Value> QKeyEventWrap::NewInstance(Isolate *isolate, QKeyEvent q) {
   Local<Function> cons = Local<Function>::New(isolate, constructor);
-  Local<Object> instance = constructor->NewInstance(isolate, 0, NULL).ToLocalChecked();
+  Local<Object> instance = constructor->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
   QKeyEventWrap* w = node::ObjectWrap::Unwrap<QKeyEventWrap>(instance);
   w->SetWrapped(q);
 
   return instance;
 }
 
-Handle<Value> QKeyEventWrap::Key(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QKeyEventWrap::Key(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QKeyEventWrap* w = node::ObjectWrap::Unwrap<QKeyEventWrap>(args.This());
   QKeyEvent* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->key()));
+  args.GetReturnValue().Set(Number::New(isolate, q->key()));
 }
 
-Handle<Value> QKeyEventWrap::Text(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QKeyEventWrap::Text(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QKeyEventWrap* w = node::ObjectWrap::Unwrap<QKeyEventWrap>(args.This());
   QKeyEvent* q = w->GetWrapped();
