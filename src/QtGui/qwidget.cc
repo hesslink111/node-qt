@@ -88,7 +88,7 @@ void QWidgetImpl::mousePressEvent(QMouseEvent* e) {
 
   const unsigned argc = 1;
   Handle<Value> argv[argc] = {
-    QMouseEventWrap::NewInstance(*e)
+    QMouseEventWrap::NewInstance(isolate, *e)
   };
   Local<Function> cb = Local<Function>::Cast(mousePressCallback_.Get(isolate));
     
@@ -106,7 +106,7 @@ void QWidgetImpl::mouseReleaseEvent(QMouseEvent* e) {
 
   const unsigned argc = 1;
   Handle<Value> argv[argc] = {
-    QMouseEventWrap::NewInstance(*e)
+    QMouseEventWrap::NewInstance(isolate, *e)
   };
   Local<Function> cb = Local<Function>::Cast(mouseReleaseCallback_.Get(isolate));
     
@@ -124,7 +124,7 @@ void QWidgetImpl::mouseMoveEvent(QMouseEvent* e) {
 
   const unsigned argc = 1;
   Handle<Value> argv[argc] = {
-    QMouseEventWrap::NewInstance(*e)
+    QMouseEventWrap::NewInstance(isolate, *e)
   };
   Local<Function> cb = Local<Function>::Cast(mouseMoveCallback_.Get(isolate));
     
@@ -142,7 +142,7 @@ void QWidgetImpl::keyPressEvent(QKeyEvent* e) {
 
   const unsigned argc = 1;
   Handle<Value> argv[argc] = {
-    QKeyEventWrap::NewInstance(*e)
+    QKeyEventWrap::NewInstance(isolate, *e)
   };
   Local<Function> cb = Local<Function>::Cast(keyPressCallback_.Get(isolate));
     
@@ -160,7 +160,7 @@ void QWidgetImpl::keyReleaseEvent(QKeyEvent* e) {
 
   const unsigned argc = 1;
   Handle<Value> argv[argc] = {
-    QKeyEventWrap::NewInstance(*e)
+    QKeyEventWrap::NewInstance(isolate, *e)
   };
   Local<Function> cb = Local<Function>::Cast(keyReleaseCallback_.Get(isolate));
     
