@@ -306,6 +306,8 @@ void QWidgetWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
 }
 
 void QWidgetWrap::ObjectName(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
@@ -328,6 +330,8 @@ void QWidgetWrap::SetObjectName(const FunctionCallbackInfo<v8::Value>& args) {
 // Intended mostly for sanity checks
 //
 void QWidgetWrap::Parent(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+  
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
