@@ -281,10 +281,12 @@ void QWidgetWrap::Close(const FunctionCallbackInfo<v8::Value>& args) {
 }
 
 void QWidgetWrap::Size(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(QSizeWrap::NewInstance(args, q->size()) );
+  args.GetReturnValue().Set(QSizeWrap::NewInstance(isolate, q->size()) );
 }
 
 void QWidgetWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {

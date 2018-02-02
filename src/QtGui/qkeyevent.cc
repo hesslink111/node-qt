@@ -71,14 +71,13 @@ Handle<Value> QKeyEventWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   return args.This();
 }
 
-Handle<Value> QKeyEventWrap::NewInstance(QKeyEvent q) {
-  HandleScope scope;
-  
-  Local<Object> instance = constructor->NewInstance(0, NULL);
+Local<Value> QKeyEventWrap::NewInstance(Isolate *isolate, QKeyEvent q) {
+  Local<Function> cons = Local<Function>::New(isolate, constructor);
+  Local<Object> instance = constructor->NewInstance(isolate, 0, NULL).ToLocalChecked();
   QKeyEventWrap* w = node::ObjectWrap::Unwrap<QKeyEventWrap>(instance);
   w->SetWrapped(q);
 
-  args.GetReturnValue().Set(instance);
+  return instance;
 }
 
 Handle<Value> QKeyEventWrap::Key(const FunctionCallbackInfo<v8::Value>& args) {
