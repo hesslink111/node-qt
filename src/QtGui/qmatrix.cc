@@ -119,7 +119,7 @@ Local<Value> QMatrixWrap::NewInstance(Isolate *isolate, QMatrix q) {
   QMatrixWrap* w = node::ObjectWrap::Unwrap<QMatrixWrap>(instance);
   w->SetWrapped(q);
 
-  args.GetReturnValue().Set(instance);
+  return instance;
 }
 
 void QMatrixWrap::M11(const FunctionCallbackInfo<v8::Value>& args) {
