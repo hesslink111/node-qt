@@ -151,5 +151,5 @@ Handle<Value> QColorWrap::Name(const FunctionCallbackInfo<v8::Value>& args) {
 
   QString name = q->name();
 
-  args.GetReturnValue().Set(qt_v8::FromQString(name));
+  args.GetReturnValue().Set(qt_v8::FromQString(isolate, name));
 }

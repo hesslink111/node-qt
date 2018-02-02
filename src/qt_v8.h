@@ -39,8 +39,8 @@ inline QString ToQString(v8::Local<v8::String> str) {
   return QString::fromUtf16( *v8::String::Value(str) );
 }
 
-inline v8::Local<v8::String> FromQString(QString str) {
-  return v8::String::NewFromTwoByte( str.utf16() );
+inline v8::Local<v8::String> FromQString(v8::Isolate *isolate, QString str) {
+  return v8::String::NewFromTwoByte(isolate, str.utf16() );
 }
 
 } // namespace

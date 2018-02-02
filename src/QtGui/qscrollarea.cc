@@ -203,7 +203,7 @@ Handle<Value> QScrollAreaWrap::ObjectName(const FunctionCallbackInfo<v8::Value>&
   QScrollAreaWrap* w = node::ObjectWrap::Unwrap<QScrollAreaWrap>(args.This());
   QScrollArea* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(qt_v8::FromQString(q->objectName()));
+  args.GetReturnValue().Set(qt_v8::FromQString(isolate, q->objectName()));
 }
 
 Handle<Value> QScrollAreaWrap::SetObjectName(const FunctionCallbackInfo<v8::Value>& args) {
@@ -229,7 +229,7 @@ Handle<Value> QScrollAreaWrap::Parent(const FunctionCallbackInfo<v8::Value>& arg
   QScrollAreaWrap* w = node::ObjectWrap::Unwrap<QScrollAreaWrap>(args.This());
   QScrollArea* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(qt_v8::FromQString(q->parent()->objectName()));
+  args.GetReturnValue().Set(qt_v8::FromQString(isolate, q->parent()->objectName()));
 }
 
 Handle<Value> QScrollAreaWrap::Update(const FunctionCallbackInfo<v8::Value>& args) {

@@ -165,7 +165,7 @@ Handle<Value> QFontWrap::Family(const FunctionCallbackInfo<v8::Value>& args) {
   QFontWrap* w = ObjectWrap::Unwrap<QFontWrap>(args.This());
   QFont* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(qt_v8::FromQString(q->family()));
+  args.GetReturnValue().Set(qt_v8::FromQString(isolate, q->family()));
 }
 
 Handle<Value> QFontWrap::SetPixelSize(const FunctionCallbackInfo<v8::Value>& args) {

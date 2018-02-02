@@ -92,7 +92,7 @@ Handle<Value> QSoundWrap::FileName(const FunctionCallbackInfo<v8::Value>& args) 
   QSoundWrap* w = ObjectWrap::Unwrap<QSoundWrap>(args.This());
   QSound* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(qt_v8::FromQString(q->fileName()));
+  args.GetReturnValue().Set(qt_v8::FromQString(isolate, q->fileName()));
 }
 
 Handle<Value> QSoundWrap::SetLoops(const FunctionCallbackInfo<v8::Value>& args) {

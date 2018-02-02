@@ -96,5 +96,5 @@ Handle<Value> QKeyEventWrap::Text(const FunctionCallbackInfo<v8::Value>& args) {
   QKeyEventWrap* w = node::ObjectWrap::Unwrap<QKeyEventWrap>(args.This());
   QKeyEvent* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(qt_v8::FromQString(q->text()));
+  args.GetReturnValue().Set(qt_v8::FromQString(isolate, q->text()));
 }

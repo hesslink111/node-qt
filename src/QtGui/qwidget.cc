@@ -309,7 +309,7 @@ void QWidgetWrap::ObjectName(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(qt_v8::FromQString(q->objectName()));
+  args.GetReturnValue().Set(qt_v8::FromQString(isolate, q->objectName()));
 }
 
 void QWidgetWrap::SetObjectName(const FunctionCallbackInfo<v8::Value>& args) {
@@ -331,7 +331,7 @@ void QWidgetWrap::Parent(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(qt_v8::FromQString(q->parent()->objectName()));
+  args.GetReturnValue().Set(qt_v8::FromQString(isolate, q->parent()->objectName()));
 }
 
 //
