@@ -48,79 +48,74 @@ void QPixmapWrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QPixmap"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "width"),
-      FunctionTemplate::New(Width)->GetFunction());
+      FunctionTemplate::New(isolate, Width)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "height"),
-      FunctionTemplate::New(Height)->GetFunction());
+      FunctionTemplate::New(isolate, Height)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "save"),
-      FunctionTemplate::New(Save)->GetFunction());
+      FunctionTemplate::New(isolate, Save)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "fill"),
-      FunctionTemplate::New(Fill)->GetFunction());
+      FunctionTemplate::New(isolate, Fill)->GetFunction());
 
-  constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewFromUtf8(isolate, "QPixmap"), constructor);
+  constructor.Reset(isolate, tpl->GetFunction());
+  target->Set(String::NewFromUtf8(isolate, "QPixmap"), tpl->GetFunction());
 }
 
-Handle<Value> QPixmapWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QPixmapWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QPixmapWrap* w = new QPixmapWrap(args[0]->IntegerValue(), 
       args[1]->IntegerValue());
   w->Wrap(args.This());
 
-  return args.This();
+  args.GetReturnValue().Set(args.This());
 }
 
-Handle<Value> QPixmapWrap::NewInstance(QPixmap q) {
-  HandleScope scope;
-  
-  Local<Object> instance = constructor->NewInstance(0, NULL);
+Local<Value> QPixmapWrap::NewInstance(Isolate *isolate, QPixmap q) {
+  Local<Function> cons = Local<Function>::New(isolate, constructor);
+  Local<Object> instance = cons->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
   QPixmapWrap* w = node::ObjectWrap::Unwrap<QPixmapWrap>(instance);
   w->SetWrapped(q);
 
-  args.GetReturnValue().Set(instance);
+  return instance;
 }
 
-Handle<Value> QPixmapWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QPixmapWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QPixmapWrap* w = ObjectWrap::Unwrap<QPixmapWrap>(args.This());
   QPixmap* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->width()));
+  args.GetReturnValue().Set(Number::New(isolate, q->width()));
 }
 
-Handle<Value> QPixmapWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QPixmapWrap::Height(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QPixmapWrap* w = ObjectWrap::Unwrap<QPixmapWrap>(args.This());
   QPixmap* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->height()));
+  args.GetReturnValue().Set(Number::New(isolate, q->height()));
 }
 
-Handle<Value> QPixmapWrap::Save(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QPixmapWrap::Save(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QPixmapWrap* w = ObjectWrap::Unwrap<QPixmapWrap>(args.This());
   QPixmap* q = w->GetWrapped();
 
   QString file(qt_v8::ToQString(args[0]->ToString()));
 
-  args.GetReturnValue().Set(Boolean::New( q->save(file) ));
+  args.GetReturnValue().Set(Boolean::New(isolate, q->save(file) ));
 }
 
 // Supports:
 //    fill()
 //    fill(QColor color)
-Handle<Value> QPixmapWrap::Fill(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QPixmapWrap::Fill(const FunctionCallbackInfo<v8::Value>& args) {
   QPixmapWrap* w = ObjectWrap::Unwrap<QPixmapWrap>(args.This());
   QPixmap* q = w->GetWrapped();
 
