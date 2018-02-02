@@ -70,14 +70,13 @@ Handle<Value> QScrollBarWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   return args.This();
 }
 
-Handle<Value> QScrollBarWrap::NewInstance(QScrollBar *q) {
-  HandleScope scope;
-  
-  Local<Object> instance = constructor->NewInstance(0, NULL);
+Local<Value> QScrollBarWrap::NewInstance(Isolate *isolate, QScrollBar *q) {
+  Local<Function> cons = Local<Function>::New(isolate, constructor);
+  Local<Object> instance = cons->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
   QScrollBarWrap* w = node::ObjectWrap::Unwrap<QScrollBarWrap>(instance);
   w->SetWrapped(q);
 
-  args.GetReturnValue().Set(instance);
+  return instance;
 }
 
 Handle<Value> QScrollBarWrap::Value(const FunctionCallbackInfo<v8::Value>& args) {

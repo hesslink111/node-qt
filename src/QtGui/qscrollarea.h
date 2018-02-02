@@ -47,34 +47,34 @@ class QScrollAreaWrap : public node::ObjectWrap {
   QScrollAreaWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QScrollAreaWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Generic QWidget methods
-  static v8::Handle<v8::Value> Resize(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Show(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Close(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Size(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Width(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Height(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> ObjectName(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> SetObjectName(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Parent(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Update(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> SetFocusPolicy(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Move(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> X(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Y(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Resize(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Show(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Close(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Size(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Width(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Height(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void ObjectName(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void SetObjectName(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Parent(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Update(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void SetFocusPolicy(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Move(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void X(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Y(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // QScrollArea-specific methods
-  static v8::Handle<v8::Value> SetWidget(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> Widget(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> SetFrameShape(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> 
+  static void SetWidget(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Widget(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void SetFrameShape(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void 
     SetVerticalScrollBarPolicy(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> 
+  static void 
     SetHorizontalScrollBarPolicy(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> VerticalScrollBar(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> HorizontalScrollBar(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void VerticalScrollBar(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void HorizontalScrollBar(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QScrollArea* q_;

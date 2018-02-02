@@ -44,7 +44,7 @@ class QScrollBarWrap : public node::ObjectWrap {
     // don't delete it! It'll segfault.
     q_ = q;
   };
-  static v8::Handle<v8::Value> NewInstance(QScrollBar *q);
+  static v8::Local<v8::Value> NewInstance(v8::Isolate *isolate, QScrollBar *q);
 
  private:
   QScrollBarWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
