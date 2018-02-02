@@ -175,10 +175,12 @@ void QFontWrap::SetPixelSize(const FunctionCallbackInfo<v8::Value>& args) {
 }
 
 void QFontWrap::PixelSize(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+
   QFontWrap* w = ObjectWrap::Unwrap<QFontWrap>(args.This());
   QFont* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Number::New(q->pixelSize()));
+  args.GetReturnValue().Set(Number::New(isolate, q->pixelSize()));
 }
 
 void QFontWrap::SetPointSize(const FunctionCallbackInfo<v8::Value>& args) {
