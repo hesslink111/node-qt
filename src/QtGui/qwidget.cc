@@ -64,7 +64,8 @@ QWidgetImpl::~QWidgetImpl() {
 }
 
 void QWidgetImpl::paintEvent(QPaintEvent* e) {
-  if (!paintEventCallback_->IsFunction())
+  if (!paintEventCallback_.IsEmpty()
+      || !paintEventCallback_.Get()->IsFunction())
     return;
 
   const unsigned argc = 0;
