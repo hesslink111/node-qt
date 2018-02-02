@@ -183,7 +183,7 @@ void QWidgetWrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
 
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QWidget"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
@@ -236,11 +236,10 @@ void QWidgetWrap::Initialize(Handle<Object> target) {
       FunctionTemplate::New(isolate, KeyReleaseEvent)->GetFunction());
 
   constructor.Reset(isolate, tpl->GetFunction());
-  target->Set(String::NewFromUtf8(isolate, "QWidget"), constructor);
+  target->Set(String::NewFromUtf8(isolate, "QWidget"), tpl->GetFunction());
 }
 
-void QWidgetWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QWidgetWrap::New(const FunctionCallbackInfo<v8::Value>& args) {  
   QWidgetImpl* q_parent = 0;
 
   if (args.Length() > 0) {
@@ -251,7 +250,7 @@ void QWidgetWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = new QWidgetWrap(q_parent);
   w->Wrap(args.This());
 
-  return args.This();
+  args.GetReturnValue().Set(args.This());
 }
 
 void QWidgetWrap::Resize(const FunctionCallbackInfo<v8::Value>& args) {
