@@ -93,9 +93,11 @@ void QPainterWrap::Initialize(Handle<Object> target) {
 }
 
 void QPainterWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+
   if (args.Length()>0) {
     isolate->ThrowException(Exception::TypeError(
-        String::New("QPainterWrap: use begin() for initialization")));
+        String::NewFromUtf8(isolate, "QPainterWrap: use begin() for initialization")));
   }
 
   QPainterWrap* w = new QPainterWrap();
@@ -355,7 +357,7 @@ void QPainterWrap::DrawPixmap(const FunctionCallbackInfo<v8::Value>& args) {
 
   if (pixmap->isNull()) {
     isolate->ThrowException(Exception::TypeError(
-      String::New("QPainterWrap::DrawPixmap: pixmap is null, no size set?")));
+      String::NewUtf8(isolate, "QPainterWrap::DrawPixmap: pixmap is null, no size set?")));
   }
 
   q->drawPixmap(args[0]->IntegerValue(), args[1]->IntegerValue(), *pixmap);
