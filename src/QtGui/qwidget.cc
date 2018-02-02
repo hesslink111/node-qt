@@ -55,12 +55,12 @@ QWidgetImpl::QWidgetImpl(QWidgetImpl* parent) : QWidget(parent) {
 }
 
 QWidgetImpl::~QWidgetImpl() {
-  paintEventCallback_.Empty();
-  mousePressCallback_.Empty();
-  mouseReleaseCallback_.Empty();
-  mouseMoveCallback_.Empty();
-  keyPressCallback_.Empty();
-  keyReleaseCallback_.Empty();
+  paintEventCallback_.Reset();
+  mousePressCallback_.Reset();
+  mouseReleaseCallback_.Reset();
+  mouseMoveCallback_.Reset();
+  keyPressCallback_.Reset();
+  keyReleaseCallback_.Reset();
 }
 
 void QWidgetImpl::paintEvent(QPaintEvent* e) {
@@ -284,7 +284,7 @@ void QWidgetWrap::Size(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(QSizeWrap::NewInstance(q->size()) );
+  args.GetReturnValue().Set(QSizeWrap::NewInstance(args, q->size()) );
 }
 
 void QWidgetWrap::Width(const FunctionCallbackInfo<v8::Value>& args) {
@@ -339,12 +339,12 @@ void QWidgetWrap::Parent(const FunctionCallbackInfo<v8::Value>& args) {
 // Binds a callback to Qt's event
 //
 void QWidgetWrap::PaintEvent(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  q->paintEventCallback_.Dispose();
-  q->paintEventCallback_ = Persistent<Function>::New(
-      Local<Function>::Cast(args[0]));
+  q->paintEventCallback_.Reset(isolate, Local<Function>::Cast(args[0]));
 
   args.GetReturnValue().SetUndefined();
 }
@@ -354,12 +354,12 @@ void QWidgetWrap::PaintEvent(const FunctionCallbackInfo<v8::Value>& args) {
 // Binds a callback to Qt's event
 //
 void QWidgetWrap::MousePressEvent(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  q->mousePressCallback_.Dispose();
-  q->mousePressCallback_ = Persistent<Function>::New(
-      Local<Function>::Cast(args[0]));
+  q->mousePressCallback_.Reset(isolate, Local<Function>::Cast(args[0]));
 
   args.GetReturnValue().SetUndefined();
 }
@@ -369,12 +369,12 @@ void QWidgetWrap::MousePressEvent(const FunctionCallbackInfo<v8::Value>& args) {
 // Binds a callback to Qt's event
 //
 void QWidgetWrap::MouseReleaseEvent(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  q->mouseReleaseCallback_.Dispose();
-  q->mouseReleaseCallback_ = Persistent<Function>::New(
-      Local<Function>::Cast(args[0]));
+  q->mouseReleaseCallback_.Reset(isolate, Local<Function>::Cast(args[0]));
 
   args.GetReturnValue().SetUndefined();
 }
@@ -384,12 +384,12 @@ void QWidgetWrap::MouseReleaseEvent(const FunctionCallbackInfo<v8::Value>& args)
 // Binds a callback to Qt's event
 //
 void QWidgetWrap::MouseMoveEvent(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+  
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  q->mouseMoveCallback_.Dispose();
-  q->mouseMoveCallback_ = Persistent<Function>::New(
-      Local<Function>::Cast(args[0]));
+  q->mouseMoveCallback_.Reset(isolate, Local<Function>::Cast(args[0]));
 
   args.GetReturnValue().SetUndefined();
 }
@@ -399,12 +399,12 @@ void QWidgetWrap::MouseMoveEvent(const FunctionCallbackInfo<v8::Value>& args) {
 // Binds a callback to Qt's event
 //
 void QWidgetWrap::KeyPressEvent(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  q->keyPressCallback_.Dispose();
-  q->keyPressCallback_ = Persistent<Function>::New(
-      Local<Function>::Cast(args[0]));
+  q->keyPressCallback_.Reset(isolate, Local<Function>::Cast(args[0]));
 
   args.GetReturnValue().SetUndefined();
 }
@@ -414,12 +414,12 @@ void QWidgetWrap::KeyPressEvent(const FunctionCallbackInfo<v8::Value>& args) {
 // Binds a callback to Qt's event
 //
 void QWidgetWrap::KeyReleaseEvent(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  q->keyReleaseCallback_.Dispose();
-  q->keyReleaseCallback_ = Persistent<Function>::New(
-      Local<Function>::Cast(args[0]));
+  q->keyReleaseCallback_.Reset(isolate, Local<Function>::Cast(args[0]));
 
   args.GetReturnValue().SetUndefined();
 }
@@ -434,10 +434,12 @@ void QWidgetWrap::Update(const FunctionCallbackInfo<v8::Value>& args) {
 }
 
 void QWidgetWrap::HasMouseTracking(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
+
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Boolean::New(q->hasMouseTracking()));
+  args.GetReturnValue().Set(Boolean::New(isolate, q->hasMouseTracking()));
 }
 
 void QWidgetWrap::SetMouseTracking(const FunctionCallbackInfo<v8::Value>& args) {
