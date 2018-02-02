@@ -94,7 +94,7 @@ void QPainterWrap::Initialize(Handle<Object> target) {
 
 void QPainterWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   if (args.Length()>0) {
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
         String::New("QPainterWrap: use begin() for initialization")));
   }
 
@@ -111,7 +111,7 @@ void QPainterWrap::Begin(const FunctionCallbackInfo<v8::Value>& args) {
   QPainter* q = w->GetWrapped();
 
   if (!args[0]->IsObject())
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
         String::NewFromUtf8(isolate, "QPainterWrap:Begin: bad arguments")));
 
   QString constructor_name = 
@@ -189,7 +189,7 @@ void QPainterWrap::SetPen(const FunctionCallbackInfo<v8::Value>& args) {
   }
 
   if (arg0_constructor != "QPen")
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
       String::NewFromUtf8(isolate, "QPainterWrap::SetPen: bad argument")));
 
   // Unwrap obj
@@ -215,7 +215,7 @@ void QPainterWrap::SetFont(const FunctionCallbackInfo<v8::Value>& args) {
   }
 
   if (arg0_constructor != "QFont")
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
       String::NewFromUtf8(isolate, "QPainterWrap::SetFont: bad argument")));
 
   // Unwrap obj
@@ -242,7 +242,7 @@ void QPainterWrap::SetMatrix(const FunctionCallbackInfo<v8::Value>& args) {
   }
 
   if (arg0_constructor != "QMatrix")
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
       String::NewFromUtf8(isolate, "QPainterWrap::SetMatrix: bad argument")));
 
   // Unwrap obj
@@ -304,7 +304,7 @@ void QPainterWrap::FillRect(const FunctionCallbackInfo<v8::Value>& args) {
                 args[2]->IntegerValue(), args[3]->IntegerValue(), 
                 (Qt::GlobalColor)args[4]->IntegerValue());
   } else {
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
         String::NewFromUtf8(isolate, "QPainterWrap:fillRect: bad arguments")));
   }
 
@@ -320,7 +320,7 @@ void QPainterWrap::DrawText(const FunctionCallbackInfo<v8::Value>& args) {
   QPainter* q = w->GetWrapped();
 
   if (!args[0]->IsNumber() || !args[1]->IsNumber() || !args[2]->IsString())
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
         String::NewFromUtf8(isolate, "QPainterWrap:DrawText: bad arguments")));
       
   q->drawText(args[0]->IntegerValue(), args[1]->IntegerValue(), 
@@ -344,7 +344,7 @@ void QPainterWrap::DrawPixmap(const FunctionCallbackInfo<v8::Value>& args) {
   }
 
   if (arg2_constructor != "QPixmap" ) {
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
       String::NewFromUtf8(isolate, "QPainterWrap::DrawPixmap: pixmap argument not recognized")));
   }
   
@@ -354,7 +354,7 @@ void QPainterWrap::DrawPixmap(const FunctionCallbackInfo<v8::Value>& args) {
   QPixmap* pixmap = pixmap_wrap->GetWrapped();
 
   if (pixmap->isNull()) {
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
       String::New("QPainterWrap::DrawPixmap: pixmap is null, no size set?")));
   }
 
@@ -378,7 +378,7 @@ void QPainterWrap::DrawImage(const FunctionCallbackInfo<v8::Value>& args) {
   }
 
   if (arg2_constructor != "QImage" ) {
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
       String::NewFromUtf8(isolate, "QPainterWrap::DrawImage: image argument not recognized")));
   }
   
@@ -388,7 +388,7 @@ void QPainterWrap::DrawImage(const FunctionCallbackInfo<v8::Value>& args) {
   QImage* image = image_wrap->GetWrapped();
 
   if (image->isNull()) {
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
       String::NewFromUtf8(isolate, "QPainterWrap::DrawImage: image is null, no size set?")));
   }
 
@@ -412,7 +412,7 @@ void QPainterWrap::StrokePath(const FunctionCallbackInfo<v8::Value>& args) {
   }
 
   if (arg0_constructor != "QPainterPath") {
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
       String::NewFromUtf8(isolate, "QPainterWrap::StrokePath: bad arguments")));
   }
   
@@ -423,7 +423,7 @@ void QPainterWrap::StrokePath(const FunctionCallbackInfo<v8::Value>& args) {
   }
 
   if (arg1_constructor != "QPen") {
-    return ThrowException(Exception::TypeError(
+    isolate->ThrowException(Exception::TypeError(
       String::NewFromUtf8(isolate, "QPainterWrap::StrokePath: bad arguments")));
   }
 
