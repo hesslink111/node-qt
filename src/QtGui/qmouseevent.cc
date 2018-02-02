@@ -72,7 +72,7 @@ void QMouseEventWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
 
 Local<Value> QMouseEventWrap::NewInstance(Isolate *isolate, QMouseEvent q) {
   Local<Function> cons = Local<Function>::New(isolate, constructor);
-  Local<Object> instance = cons->NewInstance(isolate, 0, NULL).ToLocalChecked();
+  Local<Object> instance = cons->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
   QMouseEventWrap* w = node::ObjectWrap::Unwrap<QMouseEventWrap>(instance);
   w->SetWrapped(q);
 
