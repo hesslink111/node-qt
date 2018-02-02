@@ -44,10 +44,10 @@ class QImageWrap : public node::ObjectWrap {
   QImageWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QImageWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> IsNull(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void IsNull(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QImage* q_;

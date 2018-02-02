@@ -58,7 +58,7 @@ void QImageWrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
 
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QImage"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
@@ -66,24 +66,22 @@ void QImageWrap::Initialize(Handle<Object> target) {
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "isNull"),
       FunctionTemplate::New(IsNull)->GetFunction());
 
-  constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewFromUtf8(isolate, "QImage"), constructor);
+  constructor.Reset(isolate, tpl->GetFunction());
+  target->Set(String::NewFromUtf8(isolate, "QImage"), tpl->GetFunction());
 }
 
-Handle<Value> QImageWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QImageWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QImageWrap* w = new QImageWrap(args);
   w->Wrap(args.This());
 
-  return args.This();
+  args.GetReturnValue().Set(args.This());
 }
 
-Handle<Value> QImageWrap::IsNull(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QImageWrap::IsNull(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QImageWrap* w = ObjectWrap::Unwrap<QImageWrap>(args.This());
   QImage* q = w->GetWrapped();
 
-  args.GetReturnValue().Set(Boolean::New(q->isNull()));
+  args.GetReturnValue().Set(Boolean::New(isolate, q->isNull()));
 }
