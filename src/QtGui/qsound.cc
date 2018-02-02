@@ -50,34 +50,30 @@ void QSoundWrap::Initialize(Handle<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
   tpl->SetClassName(String::NewFromUtf8(isolate, "QSound"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);  
 
   // Prototype
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "play"),
-      FunctionTemplate::New(Play)->GetFunction());
+      FunctionTemplate::New(isolate, Play)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "fileName"),
-      FunctionTemplate::New(FileName)->GetFunction());
+      FunctionTemplate::New(isolate, FileName)->GetFunction());
   tpl->PrototypeTemplate()->Set(String::NewFromUtf8(isolate, "setLoops"),
-      FunctionTemplate::New(SetLoops)->GetFunction());
+      FunctionTemplate::New(isolate, SetLoops)->GetFunction());
 
-  constructor = Persistent<Function>::New(tpl->GetFunction());
-  target->Set(String::NewFromUtf8(isolate, "QSound"), constructor);
+  constructor.Reset(isolate, tpl->GetFunction());
+  target->Set(String::NewFromUtf8(isolate, "QSound"), tpl->GetFunction());
 }
 
-Handle<Value> QSoundWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QSoundWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
   QSoundWrap* w = new QSoundWrap(args);
   w->Wrap(args.This());
 
-  return args.This();
+  args.GetReturnValue().Set(args.This());
 }
 
-Handle<Value> QSoundWrap::Play(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QSoundWrap::Play(const FunctionCallbackInfo<v8::Value>& args) {
   QSoundWrap* w = ObjectWrap::Unwrap<QSoundWrap>(args.This());
   QSound* q = w->GetWrapped();
 
@@ -86,8 +82,8 @@ Handle<Value> QSoundWrap::Play(const FunctionCallbackInfo<v8::Value>& args) {
   args.GetReturnValue().SetUndefined();
 }
 
-Handle<Value> QSoundWrap::FileName(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
+void QSoundWrap::FileName(const FunctionCallbackInfo<v8::Value>& args) {
+  Isolate *isolate = args.GetIsolate();
 
   QSoundWrap* w = ObjectWrap::Unwrap<QSoundWrap>(args.This());
   QSound* q = w->GetWrapped();
@@ -95,9 +91,7 @@ Handle<Value> QSoundWrap::FileName(const FunctionCallbackInfo<v8::Value>& args) 
   args.GetReturnValue().Set(qt_v8::FromQString(isolate, q->fileName()));
 }
 
-Handle<Value> QSoundWrap::SetLoops(const FunctionCallbackInfo<v8::Value>& args) {
-  HandleScope scope;
-
+void QSoundWrap::SetLoops(const FunctionCallbackInfo<v8::Value>& args) {
   QSoundWrap* w = ObjectWrap::Unwrap<QSoundWrap>(args.This());
   QSound* q = w->GetWrapped();
 

@@ -44,12 +44,12 @@ class QSoundWrap : public node::ObjectWrap {
   QSoundWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
   ~QSoundWrap();
   static v8::Persistent<v8::Function> constructor;
-  static v8::Handle<v8::Value> New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
-  static v8::Handle<v8::Value> Play(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> FileName(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static v8::Handle<v8::Value> SetLoops(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void Play(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void FileName(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void SetLoops(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped object
   QSound* q_;
