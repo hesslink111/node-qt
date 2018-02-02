@@ -65,15 +65,16 @@ QWidgetImpl::~QWidgetImpl() {
 
 void QWidgetImpl::paintEvent(QPaintEvent* e) {
   Isolate *isolate = Isolate::GetCurrent();
+
   if (!paintEventCallback_.IsEmpty()
       || !paintEventCallback_.Get(isolate)->IsFunction())
     return;
 
   const unsigned argc = 0;
   Handle<Value> argv[1] = {};
-  Handle<Function> cb = Persistent<Function>::Cast(paintEventCallback_);
+  Local<Function> cb = Local<Function>::Cast(paintEventCallback_.Get(isolate));
     
-  cb->Call(Context::GetCurrent()->Global(), argc, argv);
+  cb->Call(Null(isolate), argc, argv);
 }
 
 void QWidgetImpl::mousePressEvent(QMouseEvent* e) {
