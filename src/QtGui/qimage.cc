@@ -54,7 +54,7 @@ QImageWrap::~QImageWrap() {
   delete q_;
 }
 
-void QImageWrap::Initialize(Handle<Object> target) {
+void QImageWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
 
   // Prepare constructor template

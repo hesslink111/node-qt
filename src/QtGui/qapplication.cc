@@ -46,7 +46,7 @@ QApplicationWrap::~QApplicationWrap() {
   delete q_;
 }
 
-void QApplicationWrap::Initialize(Handle<Object> target) {
+void QApplicationWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
 
   // Prepare constructor template

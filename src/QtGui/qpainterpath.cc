@@ -47,7 +47,7 @@ QPainterPathWrap::~QPainterPathWrap() {
   delete q_;
 }
 
-void QPainterPathWrap::Initialize(Handle<Object> target) {
+void QPainterPathWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

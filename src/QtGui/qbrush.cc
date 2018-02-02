@@ -50,7 +50,7 @@ QBrushWrap::~QBrushWrap() {
   delete q_;
 }
 
-void QBrushWrap::Initialize(Handle<Object> target) {
+void QBrushWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

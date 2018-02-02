@@ -37,7 +37,7 @@
 
 class QSoundWrap : public node::ObjectWrap {
  public:
-  static void Initialize(v8::Handle<v8::Object> target);
+  static void Initialize(v8::Local<v8::Object> target);
   QSound* GetWrapped() const { return q_; };
 
  private:

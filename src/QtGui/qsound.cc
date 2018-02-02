@@ -46,7 +46,7 @@ QSoundWrap::~QSoundWrap() {
   delete q_;
 }
 
-void QSoundWrap::Initialize(Handle<Object> target) {
+void QSoundWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

@@ -49,7 +49,7 @@ QPointFWrap::~QPointFWrap() {
   delete q_;
 }
 
-void QPointFWrap::Initialize(Handle<Object> target) {
+void QPointFWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
 
   // Prepare constructor template

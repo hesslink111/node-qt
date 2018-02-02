@@ -44,7 +44,7 @@ QMouseEventWrap::~QMouseEventWrap() {
   delete q_;
 }
 
-void QMouseEventWrap::Initialize(Handle<Object> target) {
+void QMouseEventWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

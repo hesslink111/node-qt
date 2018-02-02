@@ -179,7 +179,7 @@ QWidgetWrap::~QWidgetWrap() {
   delete q_;
 }
 
-void QWidgetWrap::Initialize(Handle<Object> target) {
+void QWidgetWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
 
   // Prepare constructor template

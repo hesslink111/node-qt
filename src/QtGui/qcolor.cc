@@ -76,7 +76,7 @@ QColorWrap::~QColorWrap() {
   delete q_;
 }
 
-void QColorWrap::Initialize(Handle<Object> target) {
+void QColorWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

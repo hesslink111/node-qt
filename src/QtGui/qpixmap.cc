@@ -44,7 +44,7 @@ QPixmapWrap::~QPixmapWrap() {
   delete q_;
 }
 
-void QPixmapWrap::Initialize(Handle<Object> target) {
+void QPixmapWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

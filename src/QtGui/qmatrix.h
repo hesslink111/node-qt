@@ -37,7 +37,7 @@
 
 class QMatrixWrap : public node::ObjectWrap {
  public:
-  static void Initialize(v8::Handle<v8::Object> target);
+  static void Initialize(v8::Local<v8::Object> target);
   QMatrix* GetWrapped() const { return q_; };
   void SetWrapped(QMatrix q) { 
     if (q_) delete q_; 

@@ -74,7 +74,7 @@ QScrollAreaWrap::~QScrollAreaWrap() {
   delete q_;
 }
 
-void QScrollAreaWrap::Initialize(Handle<Object> target) {
+void QScrollAreaWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

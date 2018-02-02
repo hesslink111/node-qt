@@ -37,7 +37,7 @@
 
 class QBrushWrap : public node::ObjectWrap {
  public:
-  static void Initialize(v8::Handle<v8::Object> target);
+  static void Initialize(v8::Local<v8::Object> target);
   QBrush* GetWrapped() const { return q_; };
 
  private:

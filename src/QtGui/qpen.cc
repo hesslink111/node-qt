@@ -111,7 +111,7 @@ QPenWrap::~QPenWrap() {
   delete q_;
 }
 
-void QPenWrap::Initialize(Handle<Object> target) {
+void QPenWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

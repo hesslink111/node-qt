@@ -45,7 +45,7 @@ QTestEventListWrap::~QTestEventListWrap() {
   delete q_;
 }
 
-void QTestEventListWrap::Initialize(Handle<Object> target) {
+void QTestEventListWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

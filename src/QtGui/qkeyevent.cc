@@ -45,7 +45,7 @@ QKeyEventWrap::~QKeyEventWrap() {
   delete q_;
 }
 
-void QKeyEventWrap::Initialize(Handle<Object> target) {
+void QKeyEventWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

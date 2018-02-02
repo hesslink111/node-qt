@@ -76,7 +76,7 @@ QMatrixWrap::~QMatrixWrap() {
   delete q_;
 }
 
-void QMatrixWrap::Initialize(Handle<Object> target) {
+void QMatrixWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

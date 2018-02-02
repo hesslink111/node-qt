@@ -54,7 +54,7 @@
 
 using namespace v8;
 
-void Initialize(Handle<Object> target) {
+void Initialize(Local<Object> target) {
   QApplicationWrap::Initialize(target);
   QWidgetWrap::Initialize(target);
   QSizeWrap::Initialize(target);

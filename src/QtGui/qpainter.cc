@@ -52,7 +52,7 @@ QPainterWrap::~QPainterWrap() {
   delete q_;
 }
 
-void QPainterWrap::Initialize(Handle<Object> target) {
+void QPainterWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

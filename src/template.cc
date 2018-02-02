@@ -45,7 +45,7 @@ __Template__Wrap::~__Template__Wrap() {
   delete q_;
 }
 
-void __Template__Wrap::Initialize(Handle<Object> target) {
+void __Template__Wrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

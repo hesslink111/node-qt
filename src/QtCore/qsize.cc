@@ -44,7 +44,7 @@ QSizeWrap::~QSizeWrap() {
   delete q_;
 }
 
-void QSizeWrap::Initialize(Handle<Object> target) {
+void QSizeWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
   
   // Prepare constructor template

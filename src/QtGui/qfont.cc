@@ -101,7 +101,7 @@ QFontWrap::~QFontWrap() {
   delete q_;
 }
 
-void QFontWrap::Initialize(Handle<Object> target) {
+void QFontWrap::Initialize(Local<Object> target) {
   Isolate *isolate = target->GetIsolate();
 
   // Prepare constructor template
