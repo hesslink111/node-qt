@@ -71,6 +71,7 @@ void QScrollBarWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
 Local<Value> QScrollBarWrap::NewInstance(Isolate *isolate, QScrollBar *q) {
   Local<Function> cons = Local<Function>::New(isolate, constructor);
   Local<Object> instance = cons->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
+  assert(instance->InternalFieldCount() > 0)
   QScrollBarWrap* w = node::ObjectWrap::Unwrap<QScrollBarWrap>(instance);
   w->SetWrapped(q);
 
