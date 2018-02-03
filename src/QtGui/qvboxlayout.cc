@@ -30,6 +30,7 @@
 #define BUILDING_NODE_EXTENSION
 #include <node.h>
 #include "qvboxlayout.h"
+#include "qpushbutton.h"
 
 using namespace v8;
 
