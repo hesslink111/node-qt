@@ -35,6 +35,8 @@
 
 #include "QtGui/qapplication.h"
 #include "QtGui/qwidget.h"
+#include "QtGui/qvboxlayout.h"
+#include "QtGui/qpushbutton.h"
 #include "QtGui/qmouseevent.h"
 #include "QtGui/qkeyevent.h"
 #include "QtGui/qpixmap.h"
