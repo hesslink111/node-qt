@@ -34,7 +34,7 @@
 #include "qwidget.h"
 #include "qmouseevent.h"
 #include "qkeyevent.h"
-#include "qlayout.h"
+#include "qvboxlayout.h"
 
 using namespace v8;
 
@@ -258,8 +258,8 @@ void QWidgetWrap::SetLayout(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  QLayoutWrap* wl = node::ObjectWrap::Unwrap<QLayoutWrap>(args[0]);
-  QLayoutImpl* l = wl->GetWrapped();
+  QVBoxLayoutWrap* wl = node::ObjectWrap::Unwrap<QVBoxLayoutWrap>(args[0]);
+  QVBoxLayoutImpl* l = wl->GetWrapped();
 
   q->setLayout(l);
 
