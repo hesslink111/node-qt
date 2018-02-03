@@ -38,7 +38,7 @@ Persistent<Function> QVBoxLayoutWrap::constructor;
 // Supported implementations:
 //   QVBoxLayoutWrap ( ??? )
 QVBoxLayoutWrap::QVBoxLayoutWrap() : q_(NULL) {
-  q_ = new QVBoxLayout();
+  q_ = new QVBoxLayout;
 }
 
 QVBoxLayoutWrap::~QVBoxLayoutWrap() {
