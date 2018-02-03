@@ -49,10 +49,6 @@ class QPushButtonWrap : public node::ObjectWrap {
  public:
   static void Initialize(v8::Local<v8::Object> target);
   QPushButton* GetWrapped() const { return q_; };
-  void SetWrapped(QPushButton q) { 
-    if (q_) delete q_; 
-    q_ = new QPushButton(q); 
-  };
 
  private:
   QPushButtonWrap(const v8::FunctionCallbackInfo<v8::Value>& args);

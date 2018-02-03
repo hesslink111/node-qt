@@ -39,10 +39,6 @@ class QVBoxLayoutWrap : public node::ObjectWrap {
  public:
   static void Initialize(v8::Local<v8::Object> target);
   QLayout* GetWrapped() const { return q_; };
-  void SetWrapped(QVBoxLayout q) { 
-    if (q_) delete q_; 
-    q_ = new QVBoxLayout(q); 
-  };
 
  private:
   QVBoxLayoutWrap();
