@@ -73,7 +73,7 @@ void QVBoxLayoutWrap::AddWidget(const FunctionCallbackInfo<v8::Value>& args) {
   QVBoxLayoutWrap* w = ObjectWrap::Unwrap<QVBoxLayoutWrap>(args.This());
   QVBoxLayout* q = w->GetWrapped();
 
-  QPushButtonWrap* wp = ObjectWrap::Unwrap<QPushButtonWrap>(args[0]);
+  QPushButtonWrap* wp = ObjectWrap::Unwrap<QPushButtonWrap>(args[0]->ToObject());
   QPushButtonImpl* qp = wp->GetWrapped();
 
   q->addWidget(qp)

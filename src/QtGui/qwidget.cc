@@ -258,7 +258,7 @@ void QWidgetWrap::SetLayout(const FunctionCallbackInfo<v8::Value>& args) {
   QWidgetWrap* w = node::ObjectWrap::Unwrap<QWidgetWrap>(args.This());
   QWidgetImpl* q = w->GetWrapped();
 
-  QVBoxLayoutWrap* wl = node::ObjectWrap::Unwrap<QVBoxLayoutWrap>(args[0]);
+  QVBoxLayoutWrap* wl = node::ObjectWrap::Unwrap<QVBoxLayoutWrap>(args[0]->ToObject());
   QVBoxLayout* l = wl->GetWrapped();
 
   q->setLayout(l);
