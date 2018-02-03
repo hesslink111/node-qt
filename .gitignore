@@ -5,3 +5,5 @@ out/
 Release/
 npm-debug.log
 
+.DS_Store
+.vscode

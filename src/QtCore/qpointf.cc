@@ -79,7 +79,6 @@ void QPointFWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
 Local<Value> QPointFWrap::NewInstance(Isolate *isolate, QPointF q) {
   Local<Function> cons = Local<Function>::New(isolate, constructor);
   Local<Object> instance = cons->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
-  assert(instance->InternalFieldCount() > 0);
   QPointFWrap* w = node::ObjectWrap::Unwrap<QPointFWrap>(instance);
   w->SetWrapped(q);
 

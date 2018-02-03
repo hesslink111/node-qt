@@ -71,7 +71,6 @@ void QSizeWrap::New(const FunctionCallbackInfo<v8::Value>& args) {
 Local<Value> QSizeWrap::NewInstance(Isolate *isolate, QSize q) {  
   Local<Function> cons = Local<Function>::New(isolate, constructor);
   Local<Object> instance = cons->NewInstance(isolate->GetCurrentContext(), 0, NULL).ToLocalChecked();
-  assert(instance->InternalFieldCount() > 0);
   QSizeWrap* w = node::ObjectWrap::Unwrap<QSizeWrap>(instance);
   w->SetWrapped(q);
 
