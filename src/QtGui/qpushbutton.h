@@ -37,8 +37,8 @@
 
 class QPushButtonImpl : public QPushButton {
  public:
-  QWidgetImpl(QWidgetImpl* parent);
-  ~QWidgetImpl();  
+  QPushButtonImpl(QWidgetImpl* parent);
+  ~QPushButtonImpl();  
   v8::Persistent<v8::Value> clickedCallback_;
 
  private:
