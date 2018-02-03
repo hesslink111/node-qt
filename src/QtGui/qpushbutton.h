@@ -27,55 +27,47 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef QPUSHBUTTONWRAP_H
+#define QPUSHBUTTONWRAP_H
+
 #define BUILDING_NODE_EXTENSION
 #include <node.h>
+#include <node_object_wrap.h>
+#include <QPushButton>
 
-#include "QtCore/qsize.h"
-#include "QtCore/qpointf.h"
+class QPushButtonImpl : public QPushButton {
+ public:
+  QWidgetImpl(QWidgetImpl* parent);
+  ~QWidgetImpl();  
+  v8::Persistent<v8::Value> clickedCallback_;
 
-#include "QtGui/qapplication.h"
-#include "QtGui/qwidget.h"
-#include "QtGui/qmouseevent.h"
-#include "QtGui/qkeyevent.h"
-#include "QtGui/qpixmap.h"
-#include "QtGui/qpainter.h"
-#include "QtGui/qcolor.h"
-#include "QtGui/qbrush.h"
-#include "QtGui/qpen.h"
-#include "QtGui/qimage.h"
-#include "QtGui/qpainterpath.h"
-#include "QtGui/qfont.h"
-#include "QtGui/qmatrix.h"
-#include "QtGui/qsound.h"
-#include "QtGui/qscrollarea.h"
-#include "QtGui/qscrollbar.h"
+ private:
+  void clicked();
+};
 
-#include "QtTest/qtesteventlist.h"
+class QPushButtonWrap : public node::ObjectWrap {
+ public:
+  static void Initialize(v8::Local<v8::Object> target);
+  QPushButton* GetWrapped() const { return q_; };
+  void SetWrapped(QPushButton q) { 
+    if (q_) delete q_; 
+    q_ = new QPushButton(q); 
+  };
 
-using namespace v8;
+ private:
+  QPushButtonWrap(const v8::FunctionCallbackInfo<v8::Value>& args);
+  ~QPushButtonWrap();
+  static v8::Persistent<v8::Function> constructor;
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
-void Initialize(Local<Object> target) {
-  QApplicationWrap::Initialize(target);
-  QWidgetWrap::Initialize(target);
-  QVBoxLayoutWrap::Initialize(target);
-  QPushButtonWrap::Initialize(target);
-  QSizeWrap::Initialize(target);
-  QMouseEventWrap::Initialize(target);
-  QKeyEventWrap::Initialize(target);
-  QTestEventListWrap::Initialize(target);
-  QPixmapWrap::Initialize(target);
-  QPainterWrap::Initialize(target);
-  QColorWrap::Initialize(target);
-  QBrushWrap::Initialize(target);
-  QPenWrap::Initialize(target);
-  QImageWrap::Initialize(target);
-  QPointFWrap::Initialize(target);
-  QPainterPathWrap::Initialize(target);
-  QFontWrap::Initialize(target);
-  QMatrixWrap::Initialize(target);
-  QSoundWrap::Initialize(target);
-  QScrollAreaWrap::Initialize(target);
-  QScrollBarWrap::Initialize(target);
-}
+  // Wrapped methods
+  static void SetText(const v8::FunctionCallbackInfo<v8::Value>& args);
 
-NODE_MODULE(qt, Initialize)
+  // Callback setters
+  static void Clicked(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+  // Wrapped object
+  QPushButton* q_;
+};
+
+#endif

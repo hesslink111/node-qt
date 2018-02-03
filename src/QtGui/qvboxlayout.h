@@ -27,55 +27,34 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#ifndef QVBOXLAYOUTWRAP_H
+#define QVBOXLAYOUTWRAP_H
+
 #define BUILDING_NODE_EXTENSION
 #include <node.h>
+#include <node_object_wrap.h>
+#include <QVBoxLayout>
 
-#include "QtCore/qsize.h"
-#include "QtCore/qpointf.h"
+class QVBoxLayoutWrap : public node::ObjectWrap {
+ public:
+  static void Initialize(v8::Local<v8::Object> target);
+  QLayout* GetWrapped() const { return q_; };
+  void SetWrapped(QVBoxLayout q) { 
+    if (q_) delete q_; 
+    q_ = new QVBoxLayout(q); 
+  };
 
-#include "QtGui/qapplication.h"
-#include "QtGui/qwidget.h"
-#include "QtGui/qmouseevent.h"
-#include "QtGui/qkeyevent.h"
-#include "QtGui/qpixmap.h"
-#include "QtGui/qpainter.h"
-#include "QtGui/qcolor.h"
-#include "QtGui/qbrush.h"
-#include "QtGui/qpen.h"
-#include "QtGui/qimage.h"
-#include "QtGui/qpainterpath.h"
-#include "QtGui/qfont.h"
-#include "QtGui/qmatrix.h"
-#include "QtGui/qsound.h"
-#include "QtGui/qscrollarea.h"
-#include "QtGui/qscrollbar.h"
+ private:
+  QVBoxLayoutWrap();
+  ~QVBoxLayoutWrap();
+  static v8::Persistent<v8::Function> constructor;
+  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
-#include "QtTest/qtesteventlist.h"
+  // Wrapped methods
+  static void AddWidget(const v8::FunctionCallbackInfo<v8::Value>& args);
 
-using namespace v8;
+  // Wrapped object
+  QVBoxLayout* q_;
+};
 
-void Initialize(Local<Object> target) {
-  QApplicationWrap::Initialize(target);
-  QWidgetWrap::Initialize(target);
-  QVBoxLayoutWrap::Initialize(target);
-  QPushButtonWrap::Initialize(target);
-  QSizeWrap::Initialize(target);
-  QMouseEventWrap::Initialize(target);
-  QKeyEventWrap::Initialize(target);
-  QTestEventListWrap::Initialize(target);
-  QPixmapWrap::Initialize(target);
-  QPainterWrap::Initialize(target);
-  QColorWrap::Initialize(target);
-  QBrushWrap::Initialize(target);
-  QPenWrap::Initialize(target);
-  QImageWrap::Initialize(target);
-  QPointFWrap::Initialize(target);
-  QPainterPathWrap::Initialize(target);
-  QFontWrap::Initialize(target);
-  QMatrixWrap::Initialize(target);
-  QSoundWrap::Initialize(target);
-  QScrollAreaWrap::Initialize(target);
-  QScrollBarWrap::Initialize(target);
-}
-
-NODE_MODULE(qt, Initialize)
+#endif

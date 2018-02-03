@@ -74,6 +74,7 @@ class QWidgetWrap : public node::ObjectWrap {
   static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
   // Wrapped methods
+  static void SetLayout(const v8::FunctionCallbackInfo<v8::Value>& args);
   static void Resize(const v8::FunctionCallbackInfo<v8::Value>& args);
   static void Show(const v8::FunctionCallbackInfo<v8::Value>& args);
   static void Close(const v8::FunctionCallbackInfo<v8::Value>& args);
